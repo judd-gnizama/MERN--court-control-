@@ -12,7 +12,7 @@ app.use("/api/groups", groupsRoutes);
 app.use("/api/users", usersRoutes);
 
 mongoose
-  .connect("mongodb://localhost:27017/cc_db")
+  .connect("mongodb://localhost:27017/", { dbName: "cc_db" })
   .then(() => {
     console.log("Connected to DB successfully");
     app.listen(4000, "localhost", () =>

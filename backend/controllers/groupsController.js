@@ -6,20 +6,22 @@ import { UserModel } from "../models/userModel.js";
 const getGroups = async (req, res) => {
   try {
     // find all groups
-    const groups = await GroupModel.find({});
+    const groups = await GroupModel.find().sort({ createdAt: "desc" });
     res.status(200).json({ groups });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-// ====================== GET ALL GROUPS ========================
+// ====================== GET ALL GROUPS FROM USER ========================
 const getUserGroups = async (req, res) => {
   // Grab authenticated user from request body
   const user = await UserModel.findById(req.user._id);
 
   try {
-    const userGroups = await GroupModel.find({ userId: user._id });
+    const userGroups = await GroupModel.find({ userId: user._id }).sort({
+      createdAt: "desc",
+    });
     res.status(200).json({ userGroups });
   } catch (error) {
     res.status(500).json({ error: error.message });
