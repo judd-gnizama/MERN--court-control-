@@ -14,7 +14,7 @@ import {
 const Footer = () => {
   return (
     <footer className="bg-[var(--color-neutral-800)]">
-      <section className="section flex flex-col items-center justify-center text-[0.7rem] gap-6">
+      <section className="section my-5 flex flex-col items-center justify-center text-[0.7rem] gap-6">
         <Link to="/" className="flex gap-2 items-center">
           <img src={cc_logo_transparent} alt="cc_logo" className="w-10" />
           <span className="font-bold text-[1.1rem] text-[var(--color-neutral-white)]">

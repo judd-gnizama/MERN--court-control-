@@ -5,12 +5,14 @@ import BackToTop from "../components/BackToTop.jsx";
 
 const Layout = ({ children }) => {
   return (
-    <>
+    <div className="layout">
       <Header />
-      {children}
+      <div className="bg-[var(--color-neutral-black)] text-[var(--color-neutral-white)]">
+        {children}
+      </div>
       <Footer />
       <BackToTop />
-    </>
+    </div>
   );
 };
 
