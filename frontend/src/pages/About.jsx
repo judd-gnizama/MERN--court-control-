@@ -6,7 +6,7 @@ const About = () => {
     <>
       <Layout>
         <main className="section">
-          <h1 className="text-4xl font-bold">About</h1>
+          <h1 className="">About</h1>
           <p>
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat
             minus, fuga ut voluptates ab quas velit facere reiciendis,

@@ -4,7 +4,7 @@ import { cc_logo_transparent } from "../assets/images/images";
 
 const Header = () => {
   return (
-    <header className="bg-[var(--color-neutral-800)] text-[var(--color-neutral-white)]">
+    <header className="bg-[var(--color-neutral-black)] text-[var(--color-neutral-white)]">
       <section className="section">
         <nav className="flex justify-between items-center">
           <Link to="/" className="flex gap-2 items-center">

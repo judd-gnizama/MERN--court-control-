@@ -40,7 +40,7 @@
   .layout {
     min-height: 100vh;
     display: grid;
-    grid-template-rows: auto 100vh;
+    grid-template-rows: auto 1fr;
   }
   .section {
     @apply max-w-6xl m-auto p-6;
@@ -58,6 +58,20 @@
     @apply text-[var(--color-neutral-white)] bg-transparent border border-[var(--color-neutral-white)] px-4 py-2 rounded-[3px] font-bold;
   }
 
+  /* Inputs */
+
+  .input-light {
+    @apply text-sm bg-[var(--color-neutral-white)] text-[var(--color-neutral-black)] rounded-[3px] p-2 px-4 relative;
+  }
+
+  .input-with-label {
+    @apply pt-6 w-[20rem];
+  }
+
+  .label-in-input {
+    @apply text-[var(--color-neutral-300)] absolute z-20 text-[0.75rem] pt-1 pl-2;
+  }
+
   /* Links */
 
   .footer-socials > li > a {
@@ -72,7 +86,6 @@
   .red-border {
     border: 1px solid red;
   }
-
   .red-border > * {
     border: 1px solid blue;
   }
