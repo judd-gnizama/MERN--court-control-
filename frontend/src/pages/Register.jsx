@@ -31,7 +31,7 @@ const Register = () => {
                   type="email"
                   name="email"
                   id="email"
-                  placeholder="joe@courtcontrol.com"
+                  // placeholder="joe@courtcontrol.com"
                   className="input-light input-with-label"
                 />
               </div>
@@ -43,11 +43,11 @@ const Register = () => {
                   type="text"
                   name="username"
                   id="username"
-                  placeholder="johndoe123"
+                  // placeholder="johndoe123"
                   className="input-light input-with-label"
                 />
               </div>
-              <div>
+              <div className="relative">
                 <label className="label-in-input" htmlFor="password">
                   Create password:
                 </label>
@@ -57,8 +57,12 @@ const Register = () => {
                   id="password"
                   className="input-light input-with-label"
                 />
+                <button className="flex items-center absolute text-2xl text-[var(--color-neutral-300)] right-3 top-[50%] translate-y-[-50%]">
+                  <ion-icon name="eye-outline"></ion-icon>
+                  {/* <ion-icon name="eye-off-outline"></ion-icon> */}
+                </button>
               </div>
-              <div>
+              <div className="relative">
                 <label className="label-in-input" htmlFor="password2">
                   Re-enter password:
                 </label>
@@ -68,6 +72,10 @@ const Register = () => {
                   id="password2"
                   className="input-light input-with-label"
                 />
+                <button className="flex items-center absolute text-2xl text-[var(--color-neutral-300)] right-3 top-[50%] translate-y-[-50%]">
+                  <ion-icon name="eye-outline"></ion-icon>
+                  {/* <ion-icon name="eye-off-outline"></ion-icon> */}
+                </button>
               </div>
               <span className="text-left text-[0.75rem] text-red-300">
                 All fields are required
