@@ -1,15 +1,17 @@
 import React, { useContext, useState } from "react";
 import Layout from "../Layout";
 import { cc_logo_transparent, shuttlecock } from "../../assets/images/images";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FormAlert from "../../components/FormAlert";
 import { loginUser } from "../../controllers/usersControllers";
 import { UserContext } from "../../contexts/UserContext";
 
 const Login = () => {
   // Use user Context
+  const { setUser } = useContext(UserContext);
 
-  const { user, setUser } = useContext(UserContext);
+  // Use navigate hook
+  const navigate = useNavigate();
 
   // states
   const [error, setError] = useState(null);
@@ -26,8 +28,6 @@ const Login = () => {
     } else if (toChange === "password") {
       setLoginData({ ...loginData, password: event.target.value });
     }
-    console.log(event.target.value);
-    console.log(loginData);
   };
 
   const handleLogin = async (event) => {
@@ -37,8 +37,8 @@ const Login = () => {
       await loginUser(loginData);
       // update user State
       setUser({ email: loginData.email, groups: [] });
-      // update error
-      setError();
+      // Navigate to dashboard
+      navigate("/dashboard");
     } catch (error) {
       setError(error.message);
     }

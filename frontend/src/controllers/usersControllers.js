@@ -24,6 +24,7 @@ const loginUser = async (loginData) => {
   // save to localStorage
   localStorage.setItem("token", data.token);
   localStorage.setItem("email", data.email);
+  localStorage.setItem("username", data.username);
 
   return data;
 };
@@ -57,6 +58,7 @@ const registerUser = async (registerData) => {
   // save to localStorage
   localStorage.setItem("token", data.token);
   localStorage.setItem("email", data.email);
+  localStorage.setItem("username", data.username);
 
   return data;
 };

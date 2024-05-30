@@ -7,7 +7,7 @@ const Homepage = () => {
   return (
     <>
       <Layout>
-        <main className="flex items-center justify-center bg-[var(--color-neutral-black)] h-full relative max-lg:flex-col section">
+        <main className="flex items-center justify-center bg-[var(--color-neutral-black)] h-full relative max-lg:flex-col py-20 section">
           <img
             className="lg:absolute lg:translate-x-[60%] lg:-z-5"
             src={badminton_smash}

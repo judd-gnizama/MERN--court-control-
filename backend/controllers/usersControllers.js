@@ -40,7 +40,9 @@ const registerUser = async (req, res) => {
     const token = createToken(user._id);
 
     // Send response
-    res.status(200).json({ success: "User Registered", email, token });
+    res
+      .status(200)
+      .json({ success: "User Registered", email, token, username });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -70,8 +72,11 @@ const loginUser = async (req, res) => {
   try {
     // Generate session Token
     const token = createToken(user._id);
+    const username = user.username;
 
-    res.status(200).json({ success: "Successfully Logged In", email, token });
+    res
+      .status(200)
+      .json({ success: "Successfully Logged In", email, token, username });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

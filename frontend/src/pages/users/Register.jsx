@@ -1,14 +1,21 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Layout from "../Layout";
 import {
   badminton_smash2,
   cc_logo_transparent,
 } from "../../assets/images/images";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FormAlert from "../../components/FormAlert";
 import { registerUser } from "../../controllers/usersControllers";
+import { UserContext } from "../../contexts/UserContext";
 
 const Register = () => {
+  // Use user Context
+  const { setUser } = useContext(UserContext);
+
+  // Use navigate hook
+  const navigate = useNavigate();
+
   // states
   const [error, setError] = useState(null);
   const [showPass, setShowPass] = useState(false);
@@ -40,17 +47,10 @@ const Register = () => {
       // register user
       await registerUser(registerData);
       alert(`Successfully registered ${registerData.username}`);
-
       // update user State
       setUser({ email: registerData.email, groups: [] });
-
-      setRegisterData({
-        email: "",
-        username: "",
-        password: "",
-        password2: "",
-      });
-      setError();
+      // Navigate to dashboard
+      navigate("/dashboard");
     } catch (error) {
       setError(error.message);
     }
