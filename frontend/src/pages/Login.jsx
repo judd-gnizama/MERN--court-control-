@@ -1,16 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "./Layout";
 import { cc_logo_transparent, shuttlecock } from "../assets/images/images";
 import { Link } from "react-router-dom";
+import FormAlert from "../components/FormAlert";
+import { loginUser } from "../controllers/usersControllers";
 
 const Login = () => {
+  // states
+  const [error, setError] = useState(null);
+  const [showPass, setShowPass] = useState(false);
+  const [loginData, setLoginData] = useState({
+    email: "",
+    password: "",
+  });
+
+  // functions
+  const handleChangeData = (event, toChange) => {
+    if (toChange === "email") {
+      setLoginData({ ...loginData, email: event.target.value });
+    } else if (toChange === "password") {
+      setLoginData({ ...loginData, password: event.target.value });
+    }
+    console.log(event.target.value);
+    console.log(loginData);
+  };
+
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    try {
+      await loginUser(loginData);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
   return (
     <>
       <Layout>
-        <main
-          className="section grid h-full"
-          style={{ gridTemplateColumns: "75% 25%" }}
-        >
+        <main className="section grid grid-cols-[75%_25%] max-md:grid-cols-[1fr] h-full">
           <article className="flex flex-col items-center justify-center gap-2 p-4 text-center ">
             <img className="w-20" src={cc_logo_transparent} alt="cc_logo" />
             <h2 className="text-2xl font-bold">Welcome back!</h2>
@@ -23,7 +50,7 @@ const Login = () => {
                 Sign up now
               </Link>
             </p>
-            <form className="p-6 grid gap-2">
+            <form onSubmit={handleLogin} className="p-6 grid gap-2">
               <div>
                 <label className="label-in-input" htmlFor="email">
                   Email address:
@@ -33,7 +60,10 @@ const Login = () => {
                   name="email"
                   id="email"
                   // placeholder="joe@courtcontrol.com"
+                  value={loginData.email}
+                  onChange={(event) => handleChangeData(event, "email")}
                   className="input-light input-with-label"
+                  autoFocus
                 />
               </div>
               <div className="relative">
@@ -41,19 +71,23 @@ const Login = () => {
                   Password:
                 </label>
                 <input
-                  type="password"
+                  type={showPass ? "text" : "password"}
                   name="password"
                   id="password"
+                  value={loginData.password}
+                  onChange={(event) => handleChangeData(event, "password")}
                   className="input-light input-with-label"
                 />
-                <button className="flex items-center absolute text-2xl text-[var(--color-neutral-300)] right-3 top-[50%] translate-y-[-50%]">
-                  <ion-icon name="eye-outline"></ion-icon>
-                  {/* <ion-icon name="eye-off-outline"></ion-icon> */}
-                </button>
+                <a
+                  className="flex items-center absolute text-2xl text-[var(--color-neutral-300)] right-3 top-[50%] translate-y-[-50%]"
+                  onClick={() => setShowPass(!showPass)}
+                >
+                  <ion-icon
+                    name={showPass ? "eye-off-outline" : "eye-outline"}
+                  ></ion-icon>
+                </a>
               </div>
-              <span className="text-left text-[0.75rem] text-red-300">
-                All fields are required
-              </span>
+              {error && <FormAlert msg={error} />}
               <span className="text-[0.75rem] flex justify-between items-center w-full">
                 <div className="flex items-center gap-1">
                   <input
@@ -71,7 +105,9 @@ const Login = () => {
                   Forgot Password?
                 </Link>
               </span>
-              <button className="CTA"> Log in</button>
+              <button className="CTA" type="submit">
+                Log in
+              </button>
             </form>
             <div className="section-break w-60 relative flex justify-center my-6">
               <p className="absolute top-0 translate-y-[-50%] bg-[var(--color-neutral-black)] px-3">
@@ -94,7 +130,7 @@ const Login = () => {
             </div>
           </article>
           <img
-            className=" object-cover h-full"
+            className=" object-cover max-md:hidden h-full"
             src={shuttlecock}
             alt="shuttlecock"
           />
