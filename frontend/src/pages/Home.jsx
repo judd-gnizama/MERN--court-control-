@@ -1,6 +1,7 @@
 import React from "react";
 import Layout from "./Layout";
 import { badminton_smash } from "../assets/images/images";
+import { Link } from "react-router-dom";
 
 const Homepage = () => {
   return (
@@ -19,8 +20,12 @@ const Homepage = () => {
               all in one web app!
             </p>
             <div className="button-group flex gap-2">
-              <button className="CTA">Become a queue master</button>
-              <button className="CTA2">Join event as guest</button>
+              <Link to="/register" className="CTA">
+                Become a queue master
+              </Link>
+              <Link to="/" className="CTA2">
+                Join event as guest
+              </Link>
             </div>
           </article>
         </main>
