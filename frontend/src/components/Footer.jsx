@@ -15,12 +15,12 @@ const Footer = () => {
   return (
     <footer className="bg-[var(--color-neutral-800)]">
       <section className="section my-5 flex flex-col items-center justify-center text-[0.7rem] gap-6">
-        <Link to="/" className="flex gap-2 items-center">
+        {/* <Link to="/" className="flex gap-2 items-center">
           <img src={cc_logo_transparent} alt="cc_logo" className="w-10" />
           <span className="font-bold text-[1.1rem] text-[var(--color-neutral-white)]">
             Court Control
           </span>
-        </Link>
+        </Link> */}
         {/* <ul className="footer-socials flex gap-2">
             <li>
               <a href="http://" target="_blank" rel="noopener noreferrer">
@@ -58,7 +58,7 @@ const Footer = () => {
               </a>
             </li>
           </ul> */}
-        <ul className="text-[var(--color-neutral-white)] flex justify-center gap-10">
+        {/* <ul className="text-[var(--color-neutral-white)] flex justify-center gap-10">
           <li>
             <Link>Home</Link>
           </li>
@@ -71,10 +71,19 @@ const Footer = () => {
           <li>
             <Link>Buy Me Coffee</Link>
           </li>
-        </ul>
+        </ul> */}
 
-        <span className="text-[var(--color-neutral-white)]">
-          &copy; 2024 Court Control. All Rights Reserved.
+        <span className="text-[var(--color-neutral-white)] text-center">
+          &copy; 2024 Court Control. All Rights Reserved. <br />
+          Powered by{" "}
+          <a
+            className="font-bold text-[var(--color-primary)]"
+            href="/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            JMT
+          </a>
         </span>
       </section>
     </footer>

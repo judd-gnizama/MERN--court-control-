@@ -1,28 +1,63 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "./Layout";
 import { badminton_smash2, cc_logo_transparent } from "../assets/images/images";
 import { Link } from "react-router-dom";
+import FormAlert from "../components/FormAlert";
 
 const Register = () => {
+  // states
+  const [error, setError] = useState(null);
+  const [showPass, setShowPass] = useState(false);
+  const [showPass2, setShowPass2] = useState(false);
+  const [registerData, setRegisterData] = useState({
+    email: "",
+    username: "",
+    password: "",
+    password2: "",
+  });
+
+  // functions
+  const handleChangeData = (event, toChange) => {
+    if (toChange === "email") {
+      setRegisterData({ ...registerData, email: event.target.value });
+    } else if (toChange === "username") {
+      setRegisterData({ ...registerData, username: event.target.value });
+    } else if (toChange === "password") {
+      setRegisterData({ ...registerData, password: event.target.value });
+    } else if (toChange === "password2") {
+      setRegisterData({ ...registerData, password2: event.target.value });
+    }
+    console.log(event.target.value);
+    console.log(registerData);
+  };
+
+  const handleRegister = (event) => {
+    event.preventDefault();
+    console.log(registerData);
+
+    if (registerData.password !== registerData.password2) {
+      setError("Password did not match");
+    } else {
+      setError();
+    }
+  };
+
   return (
     <>
       <Layout>
-        <main
-          className="section grid h-full"
-          style={{ gridTemplateColumns: "25% 75%" }}
-        >
+        <main className="section grid grid-cols-[25%_75%] max-md:grid-cols-[1fr] h-full">
           <img
-            className=" object-cover h-full"
+            className=" object-cover h-full max-md:hidden"
             src={badminton_smash2}
             alt="badminton_smash2"
           />
           <article className="flex flex-col items-center justify-center gap-2 p-4 text-center">
-            <img className="w-20" src={cc_logo_transparent} alt="cc_logo" />
+            <img className="max-w-20" src={cc_logo_transparent} alt="cc_logo" />
             <h2 className="text-2xl font-bold">Welcome to Court Control!</h2>
             <p className="text-[0.8rem]">
               Make court queueing easier and hassle free!
             </p>
-            <form className="p-6 grid gap-2">
+            <form onSubmit={handleRegister} className="p-6 grid gap-2">
               <div>
                 <label className="label-in-input" htmlFor="email">
                   Email address:
@@ -31,8 +66,11 @@ const Register = () => {
                   type="email"
                   name="email"
                   id="email"
+                  value={registerData.email}
+                  onChange={(event) => handleChangeData(event, "email")}
                   // placeholder="joe@courtcontrol.com"
                   className="input-light input-with-label"
+                  autoFocus
                 />
               </div>
               <div>
@@ -43,6 +81,8 @@ const Register = () => {
                   type="text"
                   name="username"
                   id="username"
+                  value={registerData.username}
+                  onChange={(event) => handleChangeData(event, "username")}
                   // placeholder="johndoe123"
                   className="input-light input-with-label"
                 />
@@ -52,34 +92,44 @@ const Register = () => {
                   Create password:
                 </label>
                 <input
-                  type="password"
+                  type={showPass ? "text" : "password"}
                   name="password"
                   id="password"
+                  value={registerData.password}
+                  onChange={(event) => handleChangeData(event, "password")}
                   className="input-light input-with-label"
                 />
-                <button className="flex items-center absolute text-2xl text-[var(--color-neutral-300)] right-3 top-[50%] translate-y-[-50%]">
-                  <ion-icon name="eye-outline"></ion-icon>
-                  {/* <ion-icon name="eye-off-outline"></ion-icon> */}
-                </button>
+                <a
+                  className="flex items-center absolute text-2xl text-[var(--color-neutral-300)] right-3 top-[50%] translate-y-[-50%]"
+                  onClick={() => setShowPass(!showPass)}
+                >
+                  <ion-icon
+                    name={showPass ? "eye-off-outline" : "eye-outline"}
+                  ></ion-icon>
+                </a>
               </div>
               <div className="relative">
                 <label className="label-in-input" htmlFor="password2">
                   Re-enter password:
                 </label>
                 <input
-                  type="password"
+                  type={showPass2 ? "text" : "password"}
                   name="password2"
                   id="password2"
+                  value={registerData.password2}
+                  onChange={(event) => handleChangeData(event, "password2")}
                   className="input-light input-with-label"
                 />
-                <button className="flex items-center absolute text-2xl text-[var(--color-neutral-300)] right-3 top-[50%] translate-y-[-50%]">
-                  <ion-icon name="eye-outline"></ion-icon>
-                  {/* <ion-icon name="eye-off-outline"></ion-icon> */}
-                </button>
+                <a
+                  className="flex items-center absolute text-2xl text-[var(--color-neutral-300)] right-3 top-[50%] translate-y-[-50%]"
+                  onClick={() => setShowPass2(!showPass2)}
+                >
+                  <ion-icon
+                    name={showPass2 ? "eye-off-outline" : "eye-outline"}
+                  ></ion-icon>
+                </a>
               </div>
-              <span className="text-left text-[0.75rem] text-red-300">
-                All fields are required
-              </span>
+              {error && <FormAlert msg={error} />}
               <button className="CTA"> Create Account</button>
             </form>
             <p className="text-[0.75rem]">
