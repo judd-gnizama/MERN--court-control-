@@ -1,11 +1,16 @@
-import React, { useState } from "react";
-import Layout from "./Layout";
-import { cc_logo_transparent, shuttlecock } from "../assets/images/images";
+import React, { useContext, useState } from "react";
+import Layout from "../Layout";
+import { cc_logo_transparent, shuttlecock } from "../../assets/images/images";
 import { Link } from "react-router-dom";
-import FormAlert from "../components/FormAlert";
-import { loginUser } from "../controllers/usersControllers";
+import FormAlert from "../../components/FormAlert";
+import { loginUser } from "../../controllers/usersControllers";
+import { UserContext } from "../../contexts/UserContext";
 
 const Login = () => {
+  // Use user Context
+
+  const { user, setUser } = useContext(UserContext);
+
   // states
   const [error, setError] = useState(null);
   const [showPass, setShowPass] = useState(false);
@@ -28,7 +33,11 @@ const Login = () => {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
+      // login the user
       await loginUser(loginData);
+      // update user State
+      setUser({ email: loginData.email, groups: [] });
+      // update error
       setError();
     } catch (error) {
       setError(error.message);

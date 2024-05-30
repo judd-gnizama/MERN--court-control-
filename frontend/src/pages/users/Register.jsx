@@ -1,9 +1,12 @@
 import React, { useState } from "react";
-import Layout from "./Layout";
-import { badminton_smash2, cc_logo_transparent } from "../assets/images/images";
+import Layout from "../Layout";
+import {
+  badminton_smash2,
+  cc_logo_transparent,
+} from "../../assets/images/images";
 import { Link } from "react-router-dom";
-import FormAlert from "../components/FormAlert";
-import { registerUser } from "../controllers/usersControllers";
+import FormAlert from "../../components/FormAlert";
+import { registerUser } from "../../controllers/usersControllers";
 
 const Register = () => {
   // states
@@ -34,8 +37,13 @@ const Register = () => {
     event.preventDefault();
 
     try {
+      // register user
       await registerUser(registerData);
       alert(`Successfully registered ${registerData.username}`);
+
+      // update user State
+      setUser({ email: registerData.email, groups: [] });
+
       setRegisterData({
         email: "",
         username: "",
