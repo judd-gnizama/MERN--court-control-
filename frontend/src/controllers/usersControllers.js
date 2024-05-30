@@ -1,3 +1,5 @@
+const backendPath = "http://localhost:3000";
+
 //--------------------------- Login User --------------------------
 
 const loginUser = async (loginData) => {
@@ -6,7 +8,7 @@ const loginUser = async (loginData) => {
     throw Error("All fields are required");
   }
 
-  const res = await fetch("http://localhost:4000/api/users/login", {
+  const res = await fetch(`${backendPath}/api/users/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -17,11 +19,46 @@ const loginUser = async (loginData) => {
   const data = await res.json();
 
   if (!res.ok) {
-    console.log("Error!!!");
     throw Error(data.error || "Some Error occurred during login");
   }
+  // save to localStorage
+  localStorage.setItem("token", data.token);
+  localStorage.setItem("email", data.email);
 
-  console.log(data);
+  return data;
 };
 
-export { loginUser };
+//--------------------------- Register User --------------------------
+
+const registerUser = async (registerData) => {
+  const { email, username, password, password2 } = registerData;
+  if (!email || !username || !password || !password2) {
+    throw Error("All fields are required");
+  }
+
+  if (password !== password2) {
+    throw Error("Passwords do not match");
+  }
+
+  const res = await fetch(`${backendPath}/api/users/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email, username, password }),
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw Error(data.error || "Some Error occurred during registration");
+  }
+
+  // save to localStorage
+  localStorage.setItem("token", data.token);
+  localStorage.setItem("email", data.email);
+
+  return data;
+};
+
+export { loginUser, registerUser };

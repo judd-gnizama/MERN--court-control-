@@ -29,6 +29,7 @@ const Login = () => {
     event.preventDefault();
     try {
       await loginUser(loginData);
+      setError();
     } catch (error) {
       setError(error.message);
     }

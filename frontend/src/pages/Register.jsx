@@ -3,6 +3,7 @@ import Layout from "./Layout";
 import { badminton_smash2, cc_logo_transparent } from "../assets/images/images";
 import { Link } from "react-router-dom";
 import FormAlert from "../components/FormAlert";
+import { registerUser } from "../controllers/usersControllers";
 
 const Register = () => {
   // states
@@ -27,18 +28,23 @@ const Register = () => {
     } else if (toChange === "password2") {
       setRegisterData({ ...registerData, password2: event.target.value });
     }
-    console.log(event.target.value);
-    console.log(registerData);
   };
 
-  const handleRegister = (event) => {
+  const handleRegister = async (event) => {
     event.preventDefault();
-    console.log(registerData);
 
-    if (registerData.password !== registerData.password2) {
-      setError("Password did not match");
-    } else {
+    try {
+      await registerUser(registerData);
+      alert(`Successfully registered ${registerData.username}`);
+      setRegisterData({
+        email: "",
+        username: "",
+        password: "",
+        password2: "",
+      });
       setError();
+    } catch (error) {
+      setError(error.message);
     }
   };
 
