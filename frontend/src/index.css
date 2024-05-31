@@ -80,6 +80,11 @@
     @apply text-[var(--color-neutral-300)] absolute z-20 text-[0.75rem] pt-1 pl-2;
   }
 
+  .dropdownmenu {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
   /* Links */
 
   .footer-socials > li > a {

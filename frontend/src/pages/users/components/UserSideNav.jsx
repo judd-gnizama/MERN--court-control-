@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { cc_logo_transparent } from "../../../assets/images/images";
-import Accordion from "../../../components/Accordion";
 import { UserContext } from "../../../contexts/UserContext";
 import { getUserGroups } from "../../../controllers/groupsControllers";
 
@@ -14,8 +13,6 @@ const UserSideNav = () => {
       setUser({ ...user, groups });
     }, 500);
   }, []);
-
-  console.log(user);
 
   return (
     <>
@@ -47,6 +44,9 @@ const UserSideNav = () => {
         <div className="flex justify-between items-center">
           <h3 className="text-[0.8rem] font-bold text-[var(--color-neutral-300)]">
             GROUPS
+            <span className="ml-2 text-[var(--color-primary)]">
+              {user.groups.length}
+            </span>
           </h3>
           <Link className="material-symbols-outlined text-[1.5rem]">add</Link>
         </div>
