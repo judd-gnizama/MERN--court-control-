@@ -1,16 +1,25 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { cc_logo_transparent } from "../../../assets/images/images";
 import Accordion from "../../../components/Accordion";
 import { UserContext } from "../../../contexts/UserContext";
+import { getUserGroups } from "../../../controllers/groupsControllers";
 
 const UserSideNav = () => {
   const { user, setUser } = useContext(UserContext);
+
+  useEffect(() => {
+    setTimeout(async () => {
+      const groups = await getUserGroups();
+      setUser({ ...user, groups });
+    }, 500);
+  }, []);
+
   console.log(user);
 
   return (
     <>
-      <aside className="bg-[var(--color-neutral-600)] text-[var(--color-neutral-white)] flex flex-col p-6 gap-6">
+      <aside className="bg-[var(--color-neutral-600)] text-[var(--color-neutral-white)] flex flex-col p-6 gap-4">
         <Link to="/" className="grid grid-cols-[auto_1fr] gap-2 items-center">
           <img src={cc_logo_transparent} alt="cc_logo" className="w-10" />
           <span className="font-bold text-[1.3rem]">Court Control</span>
@@ -41,7 +50,24 @@ const UserSideNav = () => {
           </h3>
           <Link className="material-symbols-outlined text-[1.5rem]">add</Link>
         </div>
-        <Accordion />
+        {user.groups ? (
+          <div className="flex flex-col gap-2 max-w-[15rem] overflow-hidden">
+            {user.groups.map((group, index) => (
+              <Link key={index} className="flex items-center gap-2">
+                <span className="material-symbols-outlined text-[2.5rem] ">
+                  group
+                </span>
+                <p className=" overflow-hidden whitespace-nowrap text-ellipsis">
+                  {group.name}
+                </p>
+              </Link>
+            ))}
+          </div>
+        ) : (
+          <div className="text-sm text-[var(--color-neutral-100)]">
+            No groups to show
+          </div>
+        )}
         <div className="section-break"></div>
         <Link className="grid grid-cols-[auto_1fr] gap-2 items-center">
           <span className="material-symbols-outlined text-[2.5rem]">
