@@ -91,7 +91,7 @@ const deleteGroup = async (req, res) => {
 // ====================== UPDATE GROUP ========================
 const updateGroup = async (req, res) => {
   // grab request data
-  const { name, announcements, events, players } = req.body; // updateOption tells which to update
+  const { name, announcements, events, players, description } = req.body; // updateOption tells which to update
 
   let newGroup = {};
 
@@ -128,6 +128,9 @@ const updateGroup = async (req, res) => {
   }
   if (players !== null) {
     newGroup.players = players;
+  }
+  if (description !== null) {
+    newGroup.description = description;
   }
 
   if (name) {

@@ -1,26 +1,41 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../../contexts/UserContext";
 
-const UserHeader = () => {
+const UserHeader = ({ children }) => {
   // get user context
 
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
+  const [pageSelect, setPageSelect] = useState(window.location.pathname);
+  const navigate = useNavigate();
+
+  const handleSelectChange = (event) => {
+    setPageSelect(event.target.value);
+    navigate(event.target.value);
+  };
 
   return (
     <header className="bg-[var(--color-neutral-800)] text-[var(--color-neutral-white)]">
       <div className="m-2 w-max border border-[var(--color-neutral-600)] bg-[var(--color-neutral-800)] rounded-[3px] relative">
         <select
-          name=""
-          id=""
+          name="page-select"
+          id="page-select"
+          value={pageSelect}
+          onChange={handleSelectChange}
           className="text-4xl font-bold bg-inherit dropdownmenu p-4 cursor-pointer"
         >
-          <option value="" className="text-base text-[var(--color-primary)]">
+          <option value="/dashboard" className="text-base">
+            Dashboard
+          </option>
+          <option
+            value="/addgroup"
+            className="text-base text-[var(--color-primary)]"
+          >
             Add New Group
           </option>
           <optgroup label="Groups" className=" text-base">
             {user.groups?.map((group) => (
-              <option key={group._id} value={group._id}>
+              <option key={group._id} value={`g/${group._id}`}>
                 {group.name}
               </option>
             ))}
@@ -31,12 +46,7 @@ const UserHeader = () => {
         </span>
       </div>
       <nav className="flex items-center bg-[var(--color-neutral-black)]">
-        <Link className="px-10 py-4 border-b-4 border-[var(--color-primary)]">
-          Announcements
-        </Link>
-        <Link className="px-10 py-4 border-b-4">Events</Link>
-        <Link className="px-10 py-4 border-b-4">Players</Link>
-        <Link className="px-10 py-4 border-b-4">Payments</Link>
+        {children}
       </nav>
     </header>
   );

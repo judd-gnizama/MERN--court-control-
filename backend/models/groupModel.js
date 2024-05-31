@@ -173,6 +173,11 @@ const EventPlayerTeamSchema = new mongoose.Schema({
 });
 
 const EventSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    unique: true,
+  },
   date: {
     type: startEndDateTimesSchema,
     required: true,
@@ -207,6 +212,13 @@ const EventSchema = new mongoose.Schema({
   },
 });
 
+const TagSchema = new mongoose.Schema({
+  tag: {
+    type: String,
+    required: true,
+  },
+});
+
 const GroupSchema = new mongoose.Schema(
   {
     userId: {
@@ -229,6 +241,13 @@ const GroupSchema = new mongoose.Schema(
     },
     players: {
       type: [PlayerSchema],
+      default: [],
+    },
+    description: {
+      type: String,
+    },
+    tags: {
+      type: [TagSchema],
       default: [],
     },
   },

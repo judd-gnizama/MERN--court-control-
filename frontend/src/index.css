@@ -49,6 +49,10 @@
     @apply py-0 h-[1px] bg-[var(--color-neutral-white)];
   }
 
+  .user-main {
+    @apply h-[100vh] p-4 bg-[var(--color-neutral-black)] text-[var(--color-neutral-white)];
+  }
+
   /* Buttons */
 
   .CTA {
