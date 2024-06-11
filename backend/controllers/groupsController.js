@@ -30,7 +30,7 @@ const getUserGroups = async (req, res) => {
 
 // ====================== CREATE NEW GROUP ========================
 const addGroup = async (req, res) => {
-  const { name, announcements, events, players } = req.body;
+  const { name, announcements, events, players, description, tags } = req.body;
 
   // Check if name is not empty
   if (!name) {
@@ -52,11 +52,14 @@ const addGroup = async (req, res) => {
       announcements,
       events,
       players,
+      description,
+      tags,
     });
     // return success
     res.status(200).json({ success: `${name} added`, group });
   } catch (error) {
     // return a general error
+    console.log("Erorrrrrr");
     res.status(500).json({ error: error.message });
   }
 };
@@ -91,12 +94,12 @@ const deleteGroup = async (req, res) => {
 // ====================== UPDATE GROUP ========================
 const updateGroup = async (req, res) => {
   // grab request data
-  const { name, announcements, events, players, description } = req.body; // updateOption tells which to update
+  const { name, announcements, events, players, description, tags } = req.body; // updateOption tells which to update
 
   let newGroup = {};
 
   // make sure at least one data is present
-  if (!(name || announcements || events || players)) {
+  if (!(name || announcements || events || players || description || tags)) {
     return res.status(400).json({ error: "At least one param is required" });
   }
 
@@ -131,6 +134,9 @@ const updateGroup = async (req, res) => {
   }
   if (description !== null) {
     newGroup.description = description;
+  }
+  if (tags !== null) {
+    newGroup.tags = tags;
   }
 
   if (name) {

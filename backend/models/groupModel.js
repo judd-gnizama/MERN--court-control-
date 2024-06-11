@@ -212,12 +212,12 @@ const EventSchema = new mongoose.Schema({
   },
 });
 
-const TagSchema = new mongoose.Schema({
-  tag: {
-    type: String,
-    required: true,
-  },
-});
+// const TagSchema = new mongoose.Schema({
+//   tag: {
+//     type: String,
+//     required: true,
+//   },
+// });
 
 const GroupSchema = new mongoose.Schema(
   {
@@ -247,7 +247,11 @@ const GroupSchema = new mongoose.Schema(
       type: String,
     },
     tags: {
-      type: [TagSchema],
+      type: [
+        {
+          type: String,
+        },
+      ],
       default: [],
     },
   },

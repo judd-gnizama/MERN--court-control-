@@ -19,6 +19,12 @@ const Tag = ({ title, description, groupData, setGroupData }) => {
   const handleDelete = (tagToDelete) => {
     const newTags = tags.filter((tag) => tag !== tagToDelete);
     setTags(newTags);
+    setGroupData({ ...groupData, tags: newTags });
+  };
+
+  const handleDeleteAll = () => {
+    setTags([]);
+    setGroupData({ ...groupData, tags: [] });
   };
 
   return (
@@ -52,7 +58,7 @@ const Tag = ({ title, description, groupData, setGroupData }) => {
       </div>
       <a
         className="text-[0.8rem] cursor-pointer w-fit text-[var(--color-primary)] font-bold self-end"
-        onClick={() => setTags([])}
+        onClick={() => handleDeleteAll()}
       >
         Remove All
       </a>

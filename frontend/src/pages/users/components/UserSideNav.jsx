@@ -22,7 +22,10 @@ const UserSideNav = () => {
           <span className="font-bold text-[1.3rem]">Court Control</span>
         </Link>
         <div>
-          <Link className="grid grid-cols-[auto_1fr] gap-2 items-center">
+          <Link
+            to="/dashboard"
+            className="grid grid-cols-[auto_1fr] gap-2 items-center"
+          >
             <span className="material-symbols-outlined text-[2.5rem]">
               account_circle
             </span>
@@ -48,7 +51,12 @@ const UserSideNav = () => {
               {user.groups.length}
             </span>
           </h3>
-          <Link className="material-symbols-outlined text-[1.5rem]">add</Link>
+          <Link
+            to="/addgroup"
+            className="material-symbols-outlined text-[1.5rem]"
+          >
+            add
+          </Link>
         </div>
         {user.groups ? (
           <div className="flex flex-col gap-2 max-w-[15rem] overflow-hidden">

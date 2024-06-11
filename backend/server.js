@@ -9,7 +9,7 @@ const app = express();
 // handle CORS policy
 
 const corsOptions = {
-  origin: "http://localhost:3001",
+  origin: "http://localhost:3000",
   methods: "GET, POST, PUT, DELETE",
   allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
   credentials: true,
@@ -27,8 +27,8 @@ mongoose
   .connect("mongodb://localhost:27017/", { dbName: "cc_db" })
   .then(() => {
     console.log("Connected to DB successfully");
-    app.listen(3000, "localhost", () =>
-      console.log("Listening to localhost:3000")
+    app.listen(4000, "localhost", () =>
+      console.log("Listening to localhost:4000")
     );
   })
   .catch((err) => console.log(err));

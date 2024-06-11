@@ -1,4 +1,4 @@
-const backendPath = "http://localhost:3000";
+const backendPath = "http://localhost:4000";
 
 //--------------------------- Login User --------------------------
 
@@ -25,7 +25,6 @@ const loginUser = async (loginData) => {
   localStorage.setItem("token", data.token);
   localStorage.setItem("email", data.email);
   localStorage.setItem("username", data.username);
-
   return data;
 };
 
