@@ -16,7 +16,7 @@ const UserHeader = ({ children }) => {
 
   return (
     <header className="bg-[var(--color-neutral-800)] text-[var(--color-neutral-white)]">
-      <div className="m-2 w-max border border-[var(--color-neutral-600)] bg-[var(--color-neutral-800)] rounded-[3px] relative">
+      <div className="m-2 w-max border border-[var(--color-neutral-600)] bg-[var(--color-neutral-800)] rounded-[3px] relative mb-4">
         <select
           name="page-select"
           id="page-select"
@@ -35,7 +35,7 @@ const UserHeader = ({ children }) => {
           </option>
           <optgroup label="Groups" className=" text-base">
             {user.groups?.map((group) => (
-              <option key={group._id} value={`g/${group._id}`}>
+              <option key={group._id} value={`/g/${group._id}`}>
                 {group.name}
               </option>
             ))}
@@ -45,9 +45,7 @@ const UserHeader = ({ children }) => {
           keyboard_arrow_down
         </span>
       </div>
-      <nav className="flex items-center bg-[var(--color-neutral-black)]">
-        {children}
-      </nav>
+      <nav>{children}</nav>
     </header>
   );
 };

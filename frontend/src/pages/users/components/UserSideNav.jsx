@@ -26,7 +26,7 @@ const UserSideNav = () => {
             to="/dashboard"
             className="grid grid-cols-[auto_1fr] gap-2 items-center"
           >
-            <span className="material-symbols-outlined text-[2.5rem]">
+            <span className="material-symbols-outlined filled text-[2.5rem]">
               account_circle
             </span>
             <span className="flex justify-between">
@@ -37,7 +37,7 @@ const UserSideNav = () => {
                 </span>
               </p>
 
-              <span className="material-symbols-outlined text-[1.5rem]">
+              <span className="material-symbols-outlined filled text-[1.5rem]">
                 more_vert
               </span>
             </span>
@@ -53,7 +53,7 @@ const UserSideNav = () => {
           </h3>
           <Link
             to="/addgroup"
-            className="material-symbols-outlined text-[1.5rem]"
+            className="material-symbols-outlined filled text-[1.5rem]"
           >
             add
           </Link>
@@ -62,7 +62,7 @@ const UserSideNav = () => {
           <div className="flex flex-col gap-2 max-w-[15rem] overflow-hidden">
             {user.groups.map((group, index) => (
               <Link key={index} className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-[2.5rem] ">
+                <span className="material-symbols-outlined filled text-[2.5rem] ">
                   group
                 </span>
                 <p className=" overflow-hidden whitespace-nowrap text-ellipsis">
@@ -78,13 +78,13 @@ const UserSideNav = () => {
         )}
         <div className="section-break"></div>
         <Link className="grid grid-cols-[auto_1fr] gap-2 items-center">
-          <span className="material-symbols-outlined text-[2.5rem]">
+          <span className="material-symbols-outlined filled text-[2.5rem]">
             settings
           </span>
           Settings
         </Link>
         <Link className="grid grid-cols-[auto_1fr] gap-2 items-center">
-          <span className="material-symbols-outlined text-[2.5rem]">
+          <span className="material-symbols-outlined filled text-[2.5rem]">
             logout
           </span>
           Logout

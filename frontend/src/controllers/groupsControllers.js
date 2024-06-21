@@ -45,4 +45,18 @@ const addNewGroup = async (groupData) => {
   return data;
 };
 
-export { getUserGroups, addNewGroup };
+const getGroupById = async ({ groupId }) => {
+  try {
+    const groups = await getUserGroups();
+    const group = groups.filter((group) => group._id === groupId);
+    if (group.length > 0) {
+      return group[0];
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export { getUserGroups, addNewGroup, getGroupById };
