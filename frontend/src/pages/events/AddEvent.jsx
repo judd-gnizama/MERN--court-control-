@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import FormModal, { FormSection } from "../../components/FormModal";
 import Input from "../../components/Input";
+import CustomDatePicker from "../../components/CustomDatePicker";
 
 const EVENT_TYPES = ["Regular", "Fun Game", "Tournament"];
 const EVENT_ICONS = ["event_repeat", "mood", "trophy"];
@@ -8,10 +9,12 @@ const EVENT_ICONS = ["event_repeat", "mood", "trophy"];
 const AddEvent = ({ show, setShow }) => {
   const [addEventData, setAddEventData] = useState({
     name: "",
-    date: {
-      startDatetime: "",
-      endDatetime: Date.now(),
-    },
+    date: [
+      {
+        startDatetime: new Date(),
+        endDatetime: new Date(),
+      },
+    ],
     venue: "",
     eventType: "",
     isDone: false,
@@ -31,10 +34,25 @@ const AddEvent = ({ show, setShow }) => {
   const handleChangeVenue = (venue) => {
     setAddEventData({ ...addEventData, venue });
   };
-  const handleChangeStartDatetime = (event) => {
+  const handleChangeStartDatetime = (index) => {
+    const eventDate = addEventData.date[index];
+
     setAddEventData({
       ...addEventData,
-      date: { ...addEventData.date, startDatetime: event.target.value },
+      date: [...addEventData.date],
+    });
+  };
+
+  const handleAddDateTime = () => {
+    setAddEventData({
+      ...addEventData,
+      date: [
+        ...addEventData.date,
+        {
+          startDatetime: new Date(),
+          endDatetime: new Date(),
+        },
+      ],
     });
   };
 
@@ -49,12 +67,12 @@ const AddEvent = ({ show, setShow }) => {
       show={show}
       setShow={setShow}
     >
+      <Input
+        placeholder={"Event Name"}
+        inputValue={addEventData.name}
+        setInputValue={handleChangeName}
+      />
       <FormSection title={"what?"}>
-        <Input
-          placeholder={"Name"}
-          inputValue={addEventData.name}
-          setInputValue={handleChangeName}
-        />
         <div className="flex items-center gap-2">
           {EVENT_TYPES.map((type, index) => (
             <label
@@ -92,18 +110,23 @@ const AddEvent = ({ show, setShow }) => {
       </FormSection>
 
       <FormSection title={"when?"}>
-        <label htmlFor="eventDate">
-          {addEventData.date.startDatetime}
-          <input
-            type="datetime-local"
-            name="eventDate"
-            id="eventDate"
-            value={addEventData.date.startDatetime}
-            onChange={handleChangeStartDatetime}
-            className="bg-black"
-            width={"3rem"}
-          />
-        </label>
+        <div className="grid grid-cols-[1fr_1fr_auto_1fr_1fr] gap-2 place-items-center">
+          {addEventData.date.map((_date, index) => (
+            <CustomDatePicker key={index} />
+          ))}
+        </div>
+        <button
+          onClick={handleAddDateTime}
+          className="font-bold justify-self-start text-[var(--color-primary)] text-sm"
+        >
+          Add date / time
+        </button>
+      </FormSection>
+      <FormSection>
+        <div className="flex gap-2 justify-end mt-5">
+          <button className="CTA">Create Event</button>
+          <button className="CTA2">Cancel</button>
+        </div>
       </FormSection>
     </FormModal>
   );

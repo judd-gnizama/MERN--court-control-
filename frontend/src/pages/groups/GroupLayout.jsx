@@ -14,7 +14,7 @@ const GroupLayout = () => {
   const [group, setGroup] = useState(null);
   const [tab, setTab] = useState("Announcements");
   const [searchTerm, setSearchTerm] = useState("");
-  const [showAddEvent, setShowAddEvent] = useState(true);
+  const [showAddEvent, setShowAddEvent] = useState(false);
 
   useEffect(() => {
     const getGroup = async () => {

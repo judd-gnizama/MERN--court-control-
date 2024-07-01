@@ -112,4 +112,11 @@
       }
     }
   }
+  .remove-tab-loop > .react-datepicker-wrapper {
+    width: 100%;
+  }
+  .remove-tab-loop > .react-datepicker__tab-loop {
+    /* removes additional element on click*/
+    position: absolute;
+  }
 }

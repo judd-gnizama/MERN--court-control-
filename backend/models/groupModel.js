@@ -179,8 +179,8 @@ const EventSchema = new mongoose.Schema({
     unique: true,
   },
   date: {
-    type: startEndDateTimesSchema,
-    required: true,
+    type: [startEndDateTimesSchema],
+    default: []
   },
   venue: {
     type: String,

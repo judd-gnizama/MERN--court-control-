@@ -7,10 +7,10 @@ const Subheader = ({ subheadings, tab, setTab }) => {
 
   return (
     <div className="flex text-center">
-      <div className="flex flex-1">
+      <div className="flex">
         {subheadings &&
           subheadings.map((subhead, index) => (
-            <div key={index} className="flex flex-1 px-4">
+            <div key={index} className="flex px-4">
               <input
                 type="radio"
                 name="subhead"
@@ -22,7 +22,9 @@ const Subheader = ({ subheadings, tab, setTab }) => {
               <label
                 htmlFor={subhead + index}
                 className={`"flex flex-1 px-10 py-3 cursor-pointer " + ${
-                  subhead === tab ? "bg-[var(--color-primary)]" : ""
+                  subhead === tab
+                    ? " border-b-4 border-[var(--color-primary)]"
+                    : ""
                 }`}
               >
                 {subhead}

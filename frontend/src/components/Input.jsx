@@ -2,7 +2,7 @@ import React from "react";
 
 const Input = ({ icon, placeholder, inputValue, setInputValue }) => {
   return (
-    <div className="flex-1 max-w-lg rounded-[3px] overflow-hidden relative">
+    <div className="flex-1 rounded-[3px] overflow-hidden relative">
       <input
         type="text"
         name="search"
