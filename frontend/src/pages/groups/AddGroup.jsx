@@ -4,6 +4,7 @@ import Tag from "../users/components/Tag";
 import FormAlert from "../../components/FormAlert";
 import { Link, useNavigate } from "react-router-dom";
 import { addNewGroup } from "../../controllers/groupsControllers";
+import Input from "../../components/Input";
 
 const AddGroup = () => {
   const navigate = useNavigate();
@@ -12,6 +13,14 @@ const AddGroup = () => {
     name: "",
     tags: [],
   });
+
+  const handleChangeName = (newName) => {
+    setGroupData({ ...groupData, name: newName });
+  };
+
+  const handleChangeTags = (tags) => {
+    setGroupData({ ...groupData, tags });
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -22,6 +31,7 @@ const AddGroup = () => {
       setError(error.message);
     }
   };
+
   return (
     <UserLayout>
       <div className="flex flex-col gap-4 bg-[var(--color-neutral-600)] p-4 rounded-[3px] max-w-xl">
@@ -29,28 +39,19 @@ const AddGroup = () => {
           GROUP DETAILS
         </h3>
         <form className="grid gap-4">
-          <div className="relative">
-            <label htmlFor="group-name" className="label-in-input">
-              Group Name:
-            </label>
-            <input
-              type="text"
-              name="group-name"
-              id="group-name"
-              value={groupData.name}
-              onChange={(event) =>
-                setGroupData({ ...groupData, name: event.target.value })
-              }
-              className="input-light input-with-label w-full"
-              autoFocus
-            />
-          </div>
+          <Input
+            labelText={"Group Name:"}
+            placeholder={"Enter Group Name"}
+            labelClassName={"flex flex-col"}
+            inputValue={groupData.name}
+            setInputValue={handleChangeName}
+          />
           <span className="section-break"></span>
           <Tag
             title={"Player Level Tags"}
             description={"e.g.  Beginner"}
-            groupData={groupData}
-            setGroupData={setGroupData}
+            inputValue={groupData.tags}
+            setInputValue={handleChangeTags}
           />
           {error && <FormAlert msg={error} />}
           <div className="flex justify-end gap-4">

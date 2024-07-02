@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import FormAlert from "../../../components/FormAlert";
 
-const Tag = ({ title, description, groupData, setGroupData }) => {
+const Tag = ({ title, description, inputValue, setInputValue }) => {
   const [tags, setTags] = useState([]);
   const [currentTag, setCurrentTag] = useState("");
+  const [error, setError] = useState("");
 
   const handleSubmit = (event) => {
     if (event.key === "Enter" && event.target.value.trim() !== "") {
@@ -10,27 +12,31 @@ const Tag = ({ title, description, groupData, setGroupData }) => {
       const index = tags?.indexOf(_tag);
       if (index === -1) {
         setTags([...tags, _tag]);
-        setGroupData({ ...groupData, tags: [...tags, _tag] });
+        setInputValue({ ...inputValue, tags: [...tags, _tag] });
+        setError("");
+        setCurrentTag("");
+      } else {
+        setError("Already on the list");
       }
-      setCurrentTag("");
     }
   };
 
   const handleDelete = (tagToDelete) => {
     const newTags = tags.filter((tag) => tag !== tagToDelete);
     setTags(newTags);
-    setGroupData({ ...groupData, tags: newTags });
+    setInputValue(newTags);
   };
 
   const handleDeleteAll = () => {
+    setCurrentTag("");
     setTags([]);
-    setGroupData({ ...groupData, tags: [] });
+    setInputValue([]);
   };
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex gap-1 border text-black bg-white text-[0.8rem] pt-8 p-2 pl-[1rem] flex-wrap rounded-[3px] relative">
-        <label className="label-in-input top-0.5 left-0.5">{title}</label>
+      <label className="text-sm">{title}</label>
+      <div className="flex gap-1 border-none bg-[var(--color-neutral-300)] text-[var(--color-neutral-white)]text-[0.8rem] p-2 flex-wrap rounded-[3px] relative">
         {tags?.map((tag, index) => (
           <li
             key={index}
@@ -53,9 +59,10 @@ const Tag = ({ title, description, groupData, setGroupData }) => {
           value={currentTag}
           onChange={(event) => setCurrentTag(event.target.value)}
           onKeyUp={handleSubmit}
-          className="border-none focus:outline-none flex-1"
+          className="border-none focus:outline-none flex-1 bg-[var(--color-neutral-300)] text-[var(--color-neutral-white)] placeholder:text-white placeholder:opacity-70 font-bold pl-2"
         />
       </div>
+      {error && <FormAlert msg={error} />}
       <a
         className="text-[0.8rem] cursor-pointer w-fit text-[var(--color-primary)] font-bold self-end"
         onClick={() => handleDeleteAll()}

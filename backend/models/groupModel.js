@@ -180,7 +180,7 @@ const EventSchema = new mongoose.Schema({
   },
   date: {
     type: [startEndDateTimesSchema],
-    default: []
+    default: [],
   },
   venue: {
     type: String,

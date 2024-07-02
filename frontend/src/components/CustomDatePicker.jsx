@@ -2,7 +2,7 @@ import React, { forwardRef, useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import FormAlert from "./FormAlert";
 
-const CustomDatePicker = () => {
+const CustomDatePicker = ({ dates, setDates }) => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [error, setError] = useState("");
@@ -14,6 +14,7 @@ const CustomDatePicker = () => {
     _startDate.setFullYear(newDate.getFullYear());
     if (isValidDates()) {
       setStartDate(_startDate);
+      setDates({ _startDate });
       setError("");
     } else {
       setError("End Datetime cannot be before Start Datetime");
@@ -36,6 +37,7 @@ const CustomDatePicker = () => {
     _endDate.setFullYear(newDate.getFullYear());
     if (isValidDates()) {
       setEndDate(_endDate);
+      setDates({ _endDate });
       setError("");
     } else {
       setError("End Datetime cannot be before Start Datetime");
@@ -51,14 +53,13 @@ const CustomDatePicker = () => {
       setError("End Datetime cannot be before Start Datetime");
     }
   };
-
   const isValidDates = () => {
     return startDate < endDate;
   };
 
   const CustomInput = forwardRef(({ value, onClick }, ref) => (
     <button
-      className="px-3 py-2 rounded-[3px] bg-[var(--color-neutral-300)] w-full"
+      className="px-3 py-2 rounded-[3px] bg-[var(--color-neutral-300)] w-full text-nowrap"
       onClick={onClick}
       ref={ref}
     >
@@ -68,8 +69,6 @@ const CustomDatePicker = () => {
 
   return (
     <>
-      {/* <div className="flex gap-2 items-center max-md:flex-col red-border">
-        <div className="grid grid-cols-2 gap-2 remove-tab-loop"> */}
       <div className="remove-tab-loop w-full">
         <DatePicker
           selected={startDate}
@@ -89,9 +88,7 @@ const CustomDatePicker = () => {
           dateFormat={"h:mm aa"}
         />
       </div>
-      {/* </div> */}
       <p>to</p>
-      {/* <div className="grid grid-cols-2 gap-2 remove-tab-loop"> */}
       <div className="remove-tab-loop w-full">
         <DatePicker
           selected={endDate}
@@ -111,8 +108,9 @@ const CustomDatePicker = () => {
           dateFormat={"MMM dd yyyy"}
         />
       </div>
-      {/* </div> */}
-      {/* </div> */}
+      {/* <button onClick={handleDeleteDate} type="button" className="material-symbols-outlined text-gray-400">
+        close
+      </button> */}
       {error && <FormAlert msg={error} />}
     </>
   );

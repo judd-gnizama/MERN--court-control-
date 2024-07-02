@@ -13,7 +13,7 @@ const FormModal = ({ heading, subheading, children, show, setShow }) => {
         <FormModalHeader heading={heading} setShow={setShow} />
         <span className="text-sm">{subheading}</span>
         <hr className="border-gray-300 mt-2" />
-        <div className="mt-4 overflow-auto grid gap-4">{children}</div>
+        <div className="mt-4 overflow-y-scroll grid gap-4 pr-3">{children}</div>
       </div>
     </div>
   );
