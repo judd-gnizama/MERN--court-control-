@@ -1,12 +1,21 @@
 import mongoose from "mongoose";
 
 const startEndDateTimesSchema = new mongoose.Schema({
+  dateId: {
+    type: Number,
+    required: true,
+    unique: true,
+  },
   startDatetime: {
     type: Date,
     required: true,
   },
   endDatetime: {
     type: Date,
+    required: true,
+  },
+  isValid: {
+    type: Boolean,
     required: true,
   },
 });
@@ -204,11 +213,14 @@ const EventSchema = new mongoose.Schema({
   },
   description: {
     type: String,
-    required: true,
   },
   scoreboards: {
     type: [scoreboardSchema],
     default: [],
+  },
+  playerCap: {
+    type: Number,
+    required: true,
   },
 });
 

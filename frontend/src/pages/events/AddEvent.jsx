@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import FormModal, { FormSection } from "../../components/FormModal";
 import Input from "../../components/Input";
-import CustomDatePicker from "../../components/CustomDatePicker";
-import Tag from "../users/components/Tag";
+import MultiDatePicker from "../../components/MultiDatePicker";
+import FormAlert from "../../components/FormAlert";
 
 const EVENT_TYPES = ["Regular", "Fun Game", "Tournament"];
 const EVENT_ICONS = ["event_repeat", "mood", "trophy"];
@@ -10,13 +10,16 @@ const INITIAL_EVENT = {
   name: "",
   date: [
     {
-      startDatetime: new Date(),
-      endDatetime: new Date(new Date().getTime() + 2 * 60 * 60 * 1000),
+      dateId: Math.floor(Math.random() * Date.now()),
+      startDatetime: new Date(Date.now()),
+      endDatetime: new Date(Date.now() + 1 * 60 * 60 * 1000),
+      isValid: true,
     },
   ],
   venue: "",
   eventType: EVENT_TYPES[0],
   isDone: false,
+  playerCap: 20,
   playerTeams: [],
   matches: [],
   description: "",
@@ -25,38 +28,47 @@ const INITIAL_EVENT = {
 
 const AddEvent = ({ show, setShow }) => {
   const [addEventData, setAddEventData] = useState(INITIAL_EVENT);
+  const [error, setError] = useState("");
 
   const handleChangeEventType = (event) => {
     setAddEventData({ ...addEventData, eventType: event.target.value });
   };
-
   const handleChangeName = (name) => {
     setAddEventData({ ...addEventData, name });
   };
   const handleChangeVenue = (venue) => {
     setAddEventData({ ...addEventData, venue });
   };
-  const handleChangeStartDatetime = ({ _startDate, _endDate }) => {};
-
-  const handleAddDateTime = () => {
-    setAddEventData({
-      ...addEventData,
-      date: [...addEventData.date, INITIAL_EVENT.date[0]],
-    });
+  const handleChangeDates = (dates) => {
+    setAddEventData({ ...addEventData, date: dates });
   };
 
-  const handleDeleteDate = (indexToDelete) => {
-    console.log(indexToDelete);
-    console.log(addEventData.date);
-    const newDates = addEventData.date.filter(
-      (_date, index) => index !== parseInt(indexToDelete)
-    );
-    setAddEventData({ ...addEventData, date: newDates });
+  const handleSubmit = () => {
+    const { name, date, venue, eventType, playerCap } = addEventData;
+    // check for errors
+    if (
+      !name.trim() ||
+      date.length <= 0 ||
+      !venue.trim() ||
+      !eventType ||
+      playerCap <= 0 ||
+      !playerCap
+    ) {
+      setError("All fields are required");
+      return null;
+    }
+    setError("");
+    // update backend
+    console.log(addEventData);
+    try {
+    } catch (error) {}
+    // clear form content
+    // close popup menu
   };
 
-  // useEffect(() => {
-  //   console.log(addEventData);
-  // }, [addEventData]);
+  useEffect(() => {
+    console.log(addEventData);
+  }, [addEventData]);
 
   return (
     <FormModal
@@ -108,29 +120,11 @@ const AddEvent = ({ show, setShow }) => {
       </FormSection>
 
       <FormSection title={"when?"}>
-        <div className="grid grid-cols-[1fr_.75fr_auto_.75fr_1fr_auto] gap-2 place-items-center">
-          {addEventData.date.map((_date, index) => (
-            <>
-              <CustomDatePicker
-                key={index}
-                dates={addEventData.date}
-                setDates={(e) => handleChangeStartDatetime(e.target.key)}
-              />
-              <button
-                type="button"
-                className="material-symbols-outlined text-gray-400"
-              >
-                close
-              </button>
-            </>
-          ))}
-        </div>
-        <button
-          onClick={handleAddDateTime}
-          className="font-bold justify-self-start text-[var(--color-primary)] text-sm"
-        >
-          Add date / time
-        </button>
+        <MultiDatePicker
+          initial_date={INITIAL_EVENT.date[0]}
+          dates={addEventData.date}
+          setDates={handleChangeDates}
+        />
       </FormSection>
 
       <FormSection title={"who?"}>
@@ -140,6 +134,11 @@ const AddEvent = ({ show, setShow }) => {
             type="number"
             id="player-cap"
             name="player-cap"
+            min={0}
+            value={addEventData.playerCap}
+            onChange={(e) =>
+              setAddEventData({ ...addEventData, playerCap: e.target.value })
+            }
             className="font-bold p-2 bg-[var(--color-neutral-300)] text-[var(--color-neutral-white)] placeholder:text-white max-w-24 pr-2 rounded-[3px] focus:outline-none"
           />
         </label>
@@ -151,6 +150,10 @@ const AddEvent = ({ show, setShow }) => {
           name="event-description"
           id="event-description"
           placeholder="Enter description"
+          value={addEventData.description}
+          onChange={(e) =>
+            setAddEventData({ ...addEventData, description: e.target.value })
+          }
           rows={5}
           className="p-2 bg-[var(--color-neutral-300)] text-[var(--color-neutral-white)] placeholder:text-white placeholder:opacity-70 rounded-[3px] focus:outline-none"
           spellCheck={false}
@@ -158,8 +161,11 @@ const AddEvent = ({ show, setShow }) => {
       </FormSection>
 
       <FormSection>
+        {error && <FormAlert msg={error} />}
         <div className="flex gap-2 justify-end mt-5">
-          <button className="CTA">Create Event</button>
+          <button onClick={handleSubmit} className="CTA">
+            Create Event
+          </button>
           <button onClick={() => setShow(false)} className="CTA2">
             Cancel
           </button>
