@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import UserLayout from "../users/UserLayout";
 import { useParams, useSearchParams } from "react-router-dom";
 import UserSection from "../users/components/UserSection";
-import { getGroupById } from "../../controllers/groupsControllers";
+import { getGroupById, updateGroup } from "../../controllers/groupsControllers";
 import Subheader from "./Subheader";
 import Search from "./Search";
 import AddEvent from "../events/AddEvent";
@@ -12,9 +12,16 @@ const groupSections = ["Announcements", "Events", "Players", "Payments"];
 const GroupLayout = () => {
   const { groupId } = useParams();
   const [group, setGroup] = useState(null);
-  const [tab, setTab] = useState("Announcements");
+  const [tab, setTab] = useState("Events");
   const [searchTerm, setSearchTerm] = useState("");
   const [showAddEvent, setShowAddEvent] = useState(false);
+
+  const handleAddEvent = async (newEvent) => {
+    const newEvents = [...group.events, newEvent];
+    setGroup({ ...group, events: newEvents });
+    await updateGroup({ groupId, newGroup: { events: newEvents } });
+    setShowAddEvent(false);
+  };
 
   useEffect(() => {
     const getGroup = async () => {
@@ -97,7 +104,13 @@ const GroupLayout = () => {
           )}
         </UserSection>
       </UserLayout>
-      <AddEvent show={showAddEvent} setShow={setShowAddEvent} />
+      {showAddEvent && (
+        <AddEvent
+          show={showAddEvent}
+          setShow={setShowAddEvent}
+          onAddEvent={handleAddEvent}
+        />
+      )}
     </div>
   );
 };

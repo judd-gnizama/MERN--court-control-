@@ -13,21 +13,6 @@ const getGroups = async (req, res) => {
   }
 };
 
-// ====================== GET ALL GROUPS FROM USER ========================
-const getUserGroups = async (req, res) => {
-  // Grab authenticated user from request body
-  const user = await UserModel.findById(req.user._id);
-
-  try {
-    const userGroups = await GroupModel.find({ userId: user._id }).sort({
-      createdAt: "desc",
-    });
-    res.status(200).json({ userGroups });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
 // ====================== CREATE NEW GROUP ========================
 const addGroup = async (req, res) => {
   const { name, announcements, events, players, description, tags } = req.body;
@@ -59,7 +44,6 @@ const addGroup = async (req, res) => {
     res.status(200).json({ success: `${name} added`, group });
   } catch (error) {
     // return a general error
-    console.log("Erorrrrrr");
     res.status(500).json({ error: error.message });
   }
 };
@@ -153,10 +137,10 @@ const updateGroup = async (req, res) => {
 
   try {
     await group.updateOne(newGroup);
-    res.status(200).json({ success: "GroupName was updated" });
+    res.status(200).json({ success: group.name + " was updated" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
 
-export { getGroups, getUserGroups, addGroup, deleteGroup, updateGroup };
+export { getGroups, addGroup, deleteGroup, updateGroup };

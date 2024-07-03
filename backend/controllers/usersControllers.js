@@ -2,7 +2,21 @@ import { UserModel } from "../models/userModel.js";
 import bcrypt from "bcryptjs";
 import "dotenv/config.js";
 import jwt from "jsonwebtoken";
+import { GroupModel } from "../models/groupModel.js";
+// ====================== GET ALL GROUPS FROM USER ========================
+const getUserGroups = async (req, res) => {
+  // Grab authenticated user from request body
+  const user = await UserModel.findById(req.user._id);
 
+  try {
+    const userGroups = await GroupModel.find({ userId: user._id }).sort({
+      createdAt: "desc",
+    });
+    res.status(200).json({ userGroups });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
 // ====================== CREATE JWT TOKEN ========================
 const createToken = (id) => {
   return jwt.sign({ id }, process.env.SECRET, { expiresIn: "1d" });
@@ -82,4 +96,4 @@ const loginUser = async (req, res) => {
   }
 };
 
-export { registerUser, loginUser };
+export { getUserGroups, registerUser, loginUser };

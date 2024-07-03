@@ -3,35 +3,44 @@ import FormModal, { FormSection } from "../../components/FormModal";
 import Input from "../../components/Input";
 import MultiDatePicker from "../../components/MultiDatePicker";
 import FormAlert from "../../components/FormAlert";
+import { updateGroup } from "../../controllers/groupsControllers";
+import { addNewEvent } from "../../controllers/eventsControllers";
 
 const EVENT_TYPES = ["Regular", "Fun Game", "Tournament"];
 const EVENT_ICONS = ["event_repeat", "mood", "trophy"];
-const INITIAL_EVENT = {
-  name: "",
-  date: [
-    {
-      dateId: Math.floor(Math.random() * Date.now()),
-      startDatetime: new Date(Date.now()),
-      endDatetime: new Date(Date.now() + 1 * 60 * 60 * 1000),
-      isValid: true,
-    },
-  ],
-  venue: "",
-  eventType: EVENT_TYPES[0],
-  isDone: false,
-  playerCap: 20,
-  playerTeams: [],
-  matches: [],
-  description: "",
-  scoreboards: [],
+const STATUS_TYPES = ["Scheduled", "Ongoing", "Completed", "Cancelled"];
+
+const resetEventData = () => {
+  return {
+    name: "",
+    date: [
+      {
+        dateId: Math.floor(Math.random() * Date.now()),
+        startDatetime: new Date(Date.now()),
+        endDatetime: new Date(Date.now() + 1 * 60 * 60 * 1000),
+        isValid: true,
+      },
+    ],
+    venue: "",
+    eventType: EVENT_TYPES[0],
+    eventStatus: "Scheduled",
+    playerCap: 20,
+    playerTeams: [],
+    matches: [],
+    description: "",
+    scoreboards: [],
+  };
 };
 
-const AddEvent = ({ show, setShow }) => {
-  const [addEventData, setAddEventData] = useState(INITIAL_EVENT);
-  const [error, setError] = useState("");
+const AddEvent = ({ show, setShow, onAddEvent }) => {
+  const [addEventData, setAddEventData] = useState(resetEventData());
+  const [errors, setErrors] = useState([]);
 
   const handleChangeEventType = (event) => {
     setAddEventData({ ...addEventData, eventType: event.target.value });
+  };
+  const handleChangeEventStatus = (event) => {
+    setAddEventData({ ...addEventData, eventStatus: event.target.value });
   };
   const handleChangeName = (name) => {
     setAddEventData({ ...addEventData, name });
@@ -42,29 +51,44 @@ const AddEvent = ({ show, setShow }) => {
   const handleChangeDates = (dates) => {
     setAddEventData({ ...addEventData, date: dates });
   };
-
-  const handleSubmit = () => {
-    const { name, date, venue, eventType, playerCap } = addEventData;
+  const handleSubmit = async () => {
     // check for errors
-    if (
-      !name.trim() ||
-      date.length <= 0 ||
-      !venue.trim() ||
-      !eventType ||
-      playerCap <= 0 ||
-      !playerCap
-    ) {
-      setError("All fields are required");
-      return null;
+    const _errors = validateForm();
+    setErrors(_errors);
+    if (_errors.length === 0) {
+      onAddEvent(addEventData);
     }
-    setError("");
-    // update backend
-    console.log(addEventData);
-    try {
-    } catch (error) {}
-    // clear form content
-    // close popup menu
   };
+
+  const validateForm = () => {
+    const { name, date, venue, eventType, playerCap } = addEventData;
+    const errors = [];
+    // check for errors
+    if (!name.trim()) {
+      errors.push("Name. Must not be empty.");
+    }
+    if (date.length <= 0) {
+      errors.push("Date. Must not be empty.");
+    }
+    if (!venue.trim()) {
+      errors.push("Venue. Must not be empty.");
+    }
+    if (!eventType) {
+      errors.push("Event Type. Must not be empty.");
+    }
+    if (playerCap <= 0) {
+      errors.push("Max Players. Must be greater than 0");
+    }
+
+    return errors;
+  };
+
+  useEffect(() => {
+    if (!show) {
+      setAddEventData(resetEventData());
+      setErrors([]);
+    }
+  }, [show]);
 
   useEffect(() => {
     console.log(addEventData);
@@ -88,7 +112,7 @@ const AddEvent = ({ show, setShow }) => {
             <label
               key={index}
               htmlFor={`eventType ${index}`}
-              className={`flex-1 flex flex-col text-nowrap items-center p-2 rounded-[3px]  ${
+              className={`flex-1 flex flex-col text-nowrap items-center p-2 rounded-[3px] cursor-pointer  ${
                 type === addEventData.eventType
                   ? "bg-[var(--color-primary)]"
                   : "bg-[var(--color-neutral-300)]"
@@ -121,7 +145,7 @@ const AddEvent = ({ show, setShow }) => {
 
       <FormSection title={"when?"}>
         <MultiDatePicker
-          initial_date={INITIAL_EVENT.date[0]}
+          initial_date={resetEventData().date[0]}
           dates={addEventData.date}
           setDates={handleChangeDates}
         />
@@ -159,9 +183,41 @@ const AddEvent = ({ show, setShow }) => {
           spellCheck={false}
         />
       </FormSection>
+      <FormSection title={"Event Status"}>
+        <div className="grid grid-cols-4 gap-2">
+          {STATUS_TYPES.map((type, index) => (
+            <label
+              key={index}
+              htmlFor={`eventStatus ${index}`}
+              className={`flex-1 flex flex-col text-nowrap items-center p-2 rounded-[3px] cursor-pointer  ${
+                type === addEventData.eventStatus
+                  ? "bg-[var(--color-primary)]"
+                  : "bg-[var(--color-neutral-300)]"
+              }`}
+            >
+              {type}
+              <input
+                type="radio"
+                name="eventStatus"
+                id={`eventStatus ${index}`}
+                value={type}
+                onChange={handleChangeEventStatus}
+                className="hidden"
+              />
+            </label>
+          ))}
+        </div>
+      </FormSection>
 
       <FormSection>
-        {error && <FormAlert msg={error} />}
+        {errors.length > 0 && (
+          <FormAlert>
+            <h2>Errors:</h2>
+            {errors.map((error) => (
+              <li>{error}</li>
+            ))}
+          </FormAlert>
+        )}
         <div className="flex gap-2 justify-end mt-5">
           <button onClick={handleSubmit} className="CTA">
             Create Event
