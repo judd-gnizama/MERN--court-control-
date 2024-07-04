@@ -22,7 +22,9 @@ const UserHeader = ({ children }) => {
     navigate(event.target.value);
   };
 
-  const handleEditGroup = () => {};
+  const handleEditGroup = () => {
+    setPageSelect(window.location.pathname);
+  };
 
   useEffect(() => {
     setPageSelect(window.location.pathname);

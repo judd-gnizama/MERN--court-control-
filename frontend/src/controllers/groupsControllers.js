@@ -74,10 +74,26 @@ const updateGroup = async ({ groupId, newGroup }) => {
   });
 
   const data = res.json();
+
   if (!res.ok) {
     throw Error(data.error);
   }
   return data;
 };
 
-export { getUserGroups, addNewGroup, getGroupById, updateGroup };
+const deleteGroup = async ({ groupId }) => {
+  const res = await fetch(`${BACKENDPATH}/api/groups/${groupId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+  const data = res.json();
+  if (!res.ok) {
+    throw Error(data.error);
+  }
+  return data;
+};
+
+export { getUserGroups, addNewGroup, getGroupById, updateGroup, deleteGroup };

@@ -48,8 +48,8 @@ const AddGroup = () => {
           />
           <span className="section-break"></span>
           <Tag
-            title={"Player Level Tags"}
-            description={"e.g.  Beginner"}
+            labeltext={"Player Level Tags"}
+            placeholder={"e.g.  Beginner"}
             inputValue={groupData.tags}
             setInputValue={handleChangeTags}
           />

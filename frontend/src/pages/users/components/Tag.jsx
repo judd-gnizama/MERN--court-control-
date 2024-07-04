@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import FormAlert from "../../../components/FormAlert";
 
-const Tag = ({ title, description, inputValue, setInputValue }) => {
+const Tag = ({ labeltext, placeholder, inputValue, setInputValue }) => {
   const [tags, setTags] = useState(inputValue);
   const [currentTag, setCurrentTag] = useState("");
   const [error, setError] = useState("");
@@ -35,7 +35,7 @@ const Tag = ({ title, description, inputValue, setInputValue }) => {
 
   return (
     <div className="flex flex-col gap-2">
-      <label className="text-sm">{title}</label>
+      <label className="text-sm">{labeltext}</label>
       <div className="flex gap-1 border-none bg-[var(--color-neutral-300)] text-[var(--color-neutral-white)]text-[0.8rem] p-2 flex-wrap rounded-[3px] relative">
         {tags?.map((tag, index) => (
           <li
@@ -55,7 +55,7 @@ const Tag = ({ title, description, inputValue, setInputValue }) => {
           type="text"
           name="tag"
           id="tag"
-          placeholder={description}
+          placeholder={placeholder}
           value={currentTag}
           onChange={(event) => setCurrentTag(event.target.value)}
           onKeyUp={handleSubmit}
