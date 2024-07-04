@@ -11,7 +11,6 @@ const UserSideNav = () => {
     setTimeout(async () => {
       const groups = await getUserGroups();
       setUser({ ...user, groups });
-      console.log(groups);
     }, 500);
   }, []);
 

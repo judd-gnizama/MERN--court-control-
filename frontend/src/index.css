@@ -64,12 +64,17 @@
   .CTA2 {
     @apply text-[var(--color-neutral-white)] bg-transparent border border-[var(--color-neutral-white)] px-4 py-2 rounded-[3px] font-bold;
   }
+  .CTA3 {
+    @apply text-[var(--color-neutral-white)] bg-red-500 px-4 py-2 rounded-[3px] font-bold;
+  }
   .CTA:hover,
-  .CTA2:hover {
+  .CTA2:hover,
+  .CTA3:hover {
     @apply opacity-80 transition-opacity ease-in-out;
   }
   .CTA:active,
-  .CTA2:active {
+  .CTA2:active,
+  .CTA3:active {
     @apply opacity-60 transition-opacity ease-in-out;
   }
 

@@ -10,7 +10,7 @@ const Subheader = ({ subheadings, tab, setTab }) => {
       <div className="flex">
         {subheadings &&
           subheadings.map((subhead, index) => (
-            <div key={index} className="flex px-4">
+            <div key={index} className="flex">
               <input
                 type="radio"
                 name="subhead"

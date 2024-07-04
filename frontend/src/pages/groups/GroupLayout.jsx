@@ -6,6 +6,7 @@ import { getGroupById, updateGroup } from "../../controllers/groupsControllers";
 import Subheader from "./Subheader";
 import Search from "./Search";
 import AddEvent from "../events/AddEvent";
+import EditGroup from "./EditGroup";
 
 const groupSections = ["Announcements", "Events", "Players", "Payments"];
 

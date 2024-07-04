@@ -7,7 +7,6 @@ const getGroups = async (req, res) => {
   try {
     // find all groups
     const groups = await GroupModel.find().sort({ name: "desc" });
-    console.log(groups, "sorted groups");
     res.status(200).json({ groups });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -44,7 +43,6 @@ const addGroup = async (req, res) => {
     // return success
     res.status(200).json({ success: `${name} added`, group });
   } catch (error) {
-    console.log(error);
     // return a general error
     res.status(500).json({ error: error.message });
   }
