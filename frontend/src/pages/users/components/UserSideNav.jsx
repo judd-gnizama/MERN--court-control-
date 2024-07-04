@@ -11,6 +11,7 @@ const UserSideNav = () => {
     setTimeout(async () => {
       const groups = await getUserGroups();
       setUser({ ...user, groups });
+      console.log(groups);
     }, 500);
   }, []);
 
@@ -61,7 +62,11 @@ const UserSideNav = () => {
         {user.groups ? (
           <div className="flex flex-col gap-2 max-w-[15rem] overflow-hidden">
             {user.groups.map((group, index) => (
-              <Link key={index} className="flex items-center gap-2">
+              <Link
+                to={`/g/${group._id}`}
+                key={index}
+                className="flex items-center gap-2"
+              >
                 <span className="material-symbols-outlined filled text-[2.5rem] ">
                   group
                 </span>

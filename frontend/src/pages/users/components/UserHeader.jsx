@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../../contexts/UserContext";
 
@@ -13,6 +13,10 @@ const UserHeader = ({ children }) => {
     setPageSelect(event.target.value);
     navigate(event.target.value);
   };
+
+  useEffect(() => {
+    setPageSelect(window.location.pathname);
+  }, [window.location.pathname]);
 
   return (
     <header className="bg-[var(--color-neutral-800)] text-[var(--color-neutral-white)]">
