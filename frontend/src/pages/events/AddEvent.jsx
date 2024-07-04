@@ -90,9 +90,9 @@ const AddEvent = ({ show, setShow, onAddEvent }) => {
     }
   }, [show]);
 
-  useEffect(() => {
-    console.log(addEventData);
-  }, [addEventData]);
+  // useEffect(() => {
+  //   console.log(addEventData);
+  // }, [addEventData]);
 
   return (
     <FormModal
@@ -183,7 +183,7 @@ const AddEvent = ({ show, setShow, onAddEvent }) => {
           spellCheck={false}
         />
       </FormSection>
-      <FormSection title={"Event Status"}>
+      {/* <FormSection title={"Event Status"}>
         <div className="grid grid-cols-4 gap-2">
           {STATUS_TYPES.map((type, index) => (
             <label
@@ -207,14 +207,14 @@ const AddEvent = ({ show, setShow, onAddEvent }) => {
             </label>
           ))}
         </div>
-      </FormSection>
+      </FormSection> */}
 
       <FormSection>
         {errors.length > 0 && (
           <FormAlert>
             <h2>Errors:</h2>
             {errors.map((error) => (
-              <li>{error}</li>
+              <li key={error}>{error}</li>
             ))}
           </FormAlert>
         )}

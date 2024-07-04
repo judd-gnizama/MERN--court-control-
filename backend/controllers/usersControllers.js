@@ -10,7 +10,7 @@ const getUserGroups = async (req, res) => {
 
   try {
     const userGroups = await GroupModel.find({ userId: user._id }).sort({
-      createdAt: "desc",
+      name: "asc",
     });
     res.status(200).json({ userGroups });
   } catch (error) {

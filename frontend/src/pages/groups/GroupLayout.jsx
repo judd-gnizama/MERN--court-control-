@@ -86,7 +86,7 @@ const GroupLayout = () => {
                         </span>
                         <span>{event.eventType}</span>
                         <span>{event.venue}</span>
-                        <span>{event.isDone ? "Done" : "Ongoing"}</span>
+                        <span>{event.eventStatus}</span>
                         <span className="material-symbols-outlined absolute top-[50%] -translate-y-1/2 right-4">
                           chevron_right
                         </span>

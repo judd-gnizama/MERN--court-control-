@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import FormAlert from "../../../components/FormAlert";
 
 const Tag = ({ title, description, inputValue, setInputValue }) => {
-  const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState(inputValue);
   const [currentTag, setCurrentTag] = useState("");
   const [error, setError] = useState("");
 
@@ -12,7 +12,7 @@ const Tag = ({ title, description, inputValue, setInputValue }) => {
       const index = tags?.indexOf(_tag);
       if (index === -1) {
         setTags([...tags, _tag]);
-        setInputValue({ ...inputValue, tags: [...tags, _tag] });
+        setInputValue([...tags, _tag]);
         setError("");
         setCurrentTag("");
       } else {

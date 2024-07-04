@@ -2,7 +2,7 @@ import React, { forwardRef, useState } from "react";
 import DatePicker from "react-datepicker";
 import FormAlert from "./FormAlert";
 
-const MultiDatePicker = ({ initial_date, dates, setDates }) => {
+const MultiDatePicker = ({ dates, setDates }) => {
   const getNewDate = () => {
     return {
       dateId: Math.floor(Math.random() * Date.now()),
@@ -90,7 +90,7 @@ const MultiDatePicker = ({ initial_date, dates, setDates }) => {
     <>
       <div className="grid grid-cols-[1fr_.75fr_auto_.75fr_1fr_auto] gap-2 place-items-center">
         {dates.map((_date, index) => (
-          <>
+          <React.Fragment key={index}>
             <>
               <div className="remove-tab-loop w-full">
                 <DatePicker
@@ -162,7 +162,7 @@ const MultiDatePicker = ({ initial_date, dates, setDates }) => {
             {!_date.isValid && (
               <FormAlert msg={"End Datetime cannot be before Start Datetime"} />
             )}
-          </>
+          </React.Fragment>
         ))}
       </div>
       <button
