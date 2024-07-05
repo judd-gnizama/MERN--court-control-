@@ -1,4 +1,11 @@
-const FormModal = ({ heading, subheading, children, show, setShow }) => {
+const FormModal = ({
+  heading,
+  subheading,
+  children,
+  show,
+  setShow,
+  maxWidth,
+}) => {
   return (
     <div
       className={`fixed bg-gray-500 bg-opacity-70 w-full h-full z-40  top-0 left-0 right-0 bottom-0 centered-element flex justify-center items-center ${
@@ -7,7 +14,9 @@ const FormModal = ({ heading, subheading, children, show, setShow }) => {
       onClick={() => setShow(false)}
     >
       <div
-        className="grid grid-rows-[auto_1fr] bg-[var(--color-neutral-600)] text-[var(--color-neutral-white)] rounded-lg p-6 max-w-2xl min-w-96 max-h-[80%] overflow-y-hidden"
+        className={`grid grid-rows-[auto_1fr] bg-[var(--color-neutral-600)] text-[var(--color-neutral-white)] rounded-lg p-6  min-w-96 max-h-[80%] overflow-y-hidden ${
+          maxWidth ? maxWidth : "max-w-2xl"
+        }`}
         onClick={(e) => e.stopPropagation()} // stop from exiting
       >
         <FormModalHeader heading={heading} setShow={setShow} />

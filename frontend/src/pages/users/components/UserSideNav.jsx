@@ -1,17 +1,24 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { cc_logo_transparent } from "../../../assets/images/images";
 import { UserContext } from "../../../contexts/UserContext";
 import { getUserGroups } from "../../../controllers/groupsControllers";
+import AddNewGroup from "../../groups/AddNewGroup";
 
 const UserSideNav = () => {
   const { user, setUser } = useContext(UserContext);
+  const [showAddNewGroup, setShowAddNewGroup] = useState(false);
 
   useEffect(() => {
-    setTimeout(async () => {
-      const groups = await getUserGroups();
-      setUser({ ...user, groups });
-    }, 500);
+    const fetchData = async () => {
+      try {
+        const groups = await getUserGroups();
+        setUser({ ...user, groups });
+      } catch (error) {
+        console.error("Error fetching user groups: ", error);
+      }
+    };
+    fetchData();
   }, []);
 
   return (
@@ -51,12 +58,12 @@ const UserSideNav = () => {
               {user.groups.length}
             </span>
           </h3>
-          <Link
-            to="/addgroup"
+          <button
+            onClick={() => setShowAddNewGroup(true)}
             className="material-symbols-outlined filled text-[1.5rem]"
           >
             add
-          </Link>
+          </button>
         </div>
         {user.groups ? (
           <div className="flex flex-col gap-2 max-w-[15rem] overflow-hidden">
@@ -93,6 +100,7 @@ const UserSideNav = () => {
           </span>
           Logout
         </Link>
+        <AddNewGroup show={showAddNewGroup} setShow={setShowAddNewGroup} />
       </aside>
     </>
   );

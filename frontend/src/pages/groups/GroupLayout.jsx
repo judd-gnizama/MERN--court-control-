@@ -6,16 +6,18 @@ import { getGroupById, updateGroup } from "../../controllers/groupsControllers";
 import Subheader from "./Subheader";
 import Search from "./Search";
 import AddEvent from "../events/AddEvent";
-import EditGroup from "./EditGroup";
 
-const groupSections = ["Announcements", "Events", "Players", "Payments"];
+const GROUP_TABS = ["Announcements", "Events", "Players", "About"];
+const SORT_DIRECTIONS = ["unsorted", "ascending", "descending"];
 
 const GroupLayout = () => {
   const { groupId } = useParams();
   const [group, setGroup] = useState(null);
+  const [sortedGroup, setSortedGroup] = useState(null);
   const [tab, setTab] = useState("Events");
   const [searchTerm, setSearchTerm] = useState("");
   const [showAddEvent, setShowAddEvent] = useState(false);
+  const [sortDirection, setSortDirection] = useState(0);
 
   const handleAddEvent = async (newEvent) => {
     const newEvents = [...group.events, newEvent];
@@ -24,10 +26,51 @@ const GroupLayout = () => {
     setShowAddEvent(false);
   };
 
+  const cycleSortDirection = () => {
+    const direction =
+      sortDirection <= SORT_DIRECTIONS.length - 2 ? sortDirection + 1 : 0;
+    return direction;
+  };
+
+  const sortArray = (_array, sortBy, _direction) => {
+    // create shallow copy to avoid changing original
+    const array = [..._array];
+    const direction = SORT_DIRECTIONS[_direction];
+    if (!direction || direction === "unsorted") {
+      return array;
+    }
+    if (sortBy && direction) {
+      if (sortBy === "Alphabetical") {
+        return array.sort((a, b) =>
+          direction === "ascending"
+            ? a.name.localeCompare(b.name)
+            : b.name.localeCompare(a.name)
+        );
+      }
+      if (sortBy === "Number") {
+        return array.sort((a, b) =>
+          direction === "ascending" ? a - b : b - a
+        );
+      }
+    } else {
+      return array;
+    }
+  };
+
+  const handleSort = (array, sortBy) => {
+    const direction = cycleSortDirection();
+    const sortedEvents = sortArray(array, sortBy, direction);
+    if (sortedEvents) {
+      setSortedGroup({ ...group, events: sortedEvents });
+      setSortDirection(direction);
+    }
+  };
+
   useEffect(() => {
     const getGroup = async () => {
       const _group = await getGroupById({ groupId });
       setGroup(_group);
+      setSortedGroup({ ..._group });
     };
     getGroup();
   }, [groupId]);
@@ -36,7 +79,7 @@ const GroupLayout = () => {
     <div className="relative">
       <UserLayout
         subheader={
-          <Subheader subheadings={groupSections} tab={tab} setTab={setTab} />
+          <Subheader subheadings={GROUP_TABS} tab={tab} setTab={setTab} />
         }
       >
         {tab === "Events" && (
@@ -66,13 +109,23 @@ const GroupLayout = () => {
           {tab === "Events" && (
             <div className="flex flex-col pt-4 gap-2">
               <div className="grid grid-cols-[2fr_1fr_1fr_1fr] font-bold">
-                <span>Name</span>
-                <span>Type</span>
-                <span>Venue</span>
-                <span>Status</span>
+                <button
+                  onClick={() => handleSort(group.events, "Alphabetical")}
+                  className="flex gap-2 items-center"
+                >
+                  Name
+                  {(sortDirection === 1 || sortDirection === 2) && (
+                    <span className="material-symbols-outlined filled text-[0.8em]">
+                      {sortDirection === 1 ? "arrow_upward" : "arrow_downward"}
+                    </span>
+                  )}
+                </button>
+                <button>Type</button>
+                <button>Venue</button>
+                <button>Status</button>
               </div>
-              {group &&
-                group.events.map((event, eventIdx) => {
+              {sortedGroup &&
+                sortedGroup.events.map((event, eventIdx) => {
                   if (event != null) {
                     return (
                       <div

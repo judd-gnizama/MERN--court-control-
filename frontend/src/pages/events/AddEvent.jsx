@@ -3,8 +3,6 @@ import FormModal, { FormSection } from "../../components/FormModal";
 import Input from "../../components/Input";
 import MultiDatePicker from "../../components/MultiDatePicker";
 import FormAlert from "../../components/FormAlert";
-import { updateGroup } from "../../controllers/groupsControllers";
-import { addNewEvent } from "../../controllers/eventsControllers";
 
 const EVENT_TYPES = ["Regular", "Fun Game", "Tournament"];
 const EVENT_ICONS = ["event_repeat", "mood", "trophy"];

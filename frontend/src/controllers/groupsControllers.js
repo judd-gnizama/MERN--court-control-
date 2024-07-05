@@ -36,7 +36,7 @@ const addNewGroup = async (groupData) => {
     body: JSON.stringify({ name, tags }),
   });
 
-  const data = res.json();
+  const data = await res.json();
 
   if (!res.ok) {
     throw Error(data.error);
@@ -73,7 +73,7 @@ const updateGroup = async ({ groupId, newGroup }) => {
     body: JSON.stringify(newGroup),
   });
 
-  const data = res.json();
+  const data = await res.json();
 
   if (!res.ok) {
     throw Error(data.error);
@@ -89,7 +89,7 @@ const deleteGroup = async ({ groupId }) => {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   });
-  const data = res.json();
+  const data = await res.json();
   if (!res.ok) {
     throw Error(data.error);
   }

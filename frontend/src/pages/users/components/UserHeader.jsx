@@ -33,35 +33,33 @@ const UserHeader = ({ children }) => {
   return (
     <header className="flex flex-col gap-2 bg-[var(--color-neutral-800)] text-[var(--color-neutral-white)] p-4 pb-0">
       <div className="flex justify-between pb-0">
-        <div className=" self-center w-max border border-[var(--color-neutral-600)] bg-[var(--color-neutral-800)] rounded-[3px] relative">
-          <select
-            name="page-select"
-            id="page-select"
-            value={pageSelect}
-            onChange={handleSelectChange}
-            className="text-4xl font-bold bg-inherit dropdownmenu p-4 cursor-pointer"
-          >
-            <option value="/dashboard" className="text-base">
-              Dashboard
-            </option>
-            <option
-              value="/addgroup"
-              className="text-base text-[var(--color-primary)]"
+        {!isGroupPage() ? (
+          <h1 className="text-4xl font-bold p-4">Dashboard</h1>
+        ) : (
+          <div className=" self-center w-max border border-[var(--color-neutral-600)] bg-[var(--color-neutral-800)] rounded-[3px] relative">
+            <select
+              name="page-select"
+              id="page-select"
+              value={pageSelect}
+              onChange={handleSelectChange}
+              className="text-4xl font-bold bg-inherit dropdownmenu p-4 cursor-pointer"
             >
-              Add New Group
-            </option>
-            <optgroup label="Groups" className=" text-base">
-              {user.groups?.map((group) => (
-                <option key={group._id} value={`/g/${group._id}`}>
-                  {group.name}
-                </option>
-              ))}
-            </optgroup>
-          </select>
-          <span className="material-symbols-outlined absolute top-[50%] translate-y-[-50%] right-3 text-white pointer-events-none">
-            keyboard_arrow_down
-          </span>
-        </div>
+              {/* <option value="/dashboard" className="text-base">
+              Dashboard
+            </option> */}
+              <optgroup label="Groups" className=" text-base">
+                {user.groups?.map((group) => (
+                  <option key={group._id} value={`/g/${group._id}`}>
+                    {group.name}
+                  </option>
+                ))}
+              </optgroup>
+            </select>
+            <span className="material-symbols-outlined absolute top-[50%] translate-y-[-50%] right-3 text-white pointer-events-none">
+              keyboard_arrow_down
+            </span>
+          </div>
+        )}
         {isGroupPage() && (
           <div className="grid grid-cols-2 gap-2">
             <button
@@ -71,7 +69,7 @@ const UserHeader = ({ children }) => {
               <span className="material-symbols-outlined filled text-2xl">
                 edit_square
               </span>
-              Edit Details
+              Edit Group
             </button>
             <button className="flex flex-col text-sm items-center gap-2 p-2 rounded-[3px] bg-[var(--color-neutral-300)]">
               <span className="material-symbols-outlined filled text-2xl">

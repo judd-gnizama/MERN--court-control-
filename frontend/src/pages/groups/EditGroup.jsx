@@ -7,16 +7,17 @@ import Tag from "../users/components/Tag";
 import { deleteGroup, updateGroup } from "../../controllers/groupsControllers";
 import FormAlert from "../../components/FormAlert";
 
-const EditGroup = ({ show, setShow, onEditGroup }) => {
+const EditGroup = ({ show, setShow }) => {
   const { groupId } = useParams();
   const { user, setUser } = useContext(UserContext);
   const groups = user.groups;
   const [currentGroup, setCurrentGroup] = useState(null);
+  const [isChanged, setIsChanged] = useState(false);
   const [errors, setErrors] = useState("");
   const navigate = useNavigate();
 
-  const resetCurrentGroup = () => {
-    setCurrentGroup(groups.filter((group) => group._id === groupId)[0]);
+  const getSavedGroup = () => {
+    return groups.filter((group) => group._id === groupId)[0];
   };
 
   const validateForm = () => {
@@ -56,19 +57,23 @@ const EditGroup = ({ show, setShow, onEditGroup }) => {
     const _errors = validateForm();
     if (_errors.length <= 0) {
       try {
-        // submit changes
-        await updateGroup({
-          groupId,
-          newGroup: { name: currentGroup.name, tags: currentGroup.tags },
-        });
-        // update usercontext
-        updateUserContext("update");
-        // reset form
-        resetCurrentGroup();
+        const newGroup = whatChanged();
+        if (Object.keys(newGroup).length > 0) {
+          // submit changes
+          await updateGroup({
+            groupId,
+            newGroup,
+          });
+          // update usercontext
+          updateUserContext("update");
+          // reset form
+          setCurrentGroup(getSavedGroup());
+        }
         // close modal
         setShow(false);
       } catch (error) {
         console.error(error);
+        setErrors([...errors, error.message]);
       }
     } else {
       setErrors(_errors);
@@ -87,18 +92,38 @@ const EditGroup = ({ show, setShow, onEditGroup }) => {
     }
   };
 
+  const whatChanged = () => {
+    if (!currentGroup) {
+      return {};
+    }
+    const newGroup = {};
+    const oldGroup = getSavedGroup();
+
+    if (oldGroup.name !== currentGroup.name) {
+      newGroup.name = currentGroup.name;
+    }
+    if (oldGroup.tags !== currentGroup.tags) {
+      newGroup.tags = currentGroup.tags;
+    }
+    return newGroup;
+  };
+
   useEffect(() => {
     if (groupId) {
-      resetCurrentGroup();
+      setCurrentGroup(getSavedGroup());
     }
   }, []);
 
   useEffect(() => {
     if (!show) {
-      resetCurrentGroup();
+      setCurrentGroup(getSavedGroup());
       setErrors([]);
     }
   }, [show]);
+
+  useEffect(() => {
+    setIsChanged(Object.keys(whatChanged()).length > 0);
+  }, [currentGroup]);
 
   return (
     <>
@@ -106,12 +131,12 @@ const EditGroup = ({ show, setShow, onEditGroup }) => {
         <FormModal
           show={show}
           setShow={setShow}
-          heading={"Edit Group Details"}
+          heading={"Edit Group"}
           subheading={currentGroup.name}
+          maxWidth={"max-w-min"}
         >
           <FormSection title={"Group Name"}>
             <Input
-              // labelText={"Group Name:"}
               placeholder={"Enter Group Name"}
               labelClassName={"flex flex-col"}
               inputValue={currentGroup.name}
@@ -144,7 +169,11 @@ const EditGroup = ({ show, setShow, onEditGroup }) => {
             </FormAlert>
           )}
           <div className="flex gap-2 justify-end mt-5">
-            <button onClick={handleSubmit} className="CTA">
+            <button
+              onClick={handleSubmit}
+              className="CTA disabled:cursor-not-allowed disabled:opacity-20"
+              disabled={!isChanged}
+            >
               Update Group
             </button>
             <button onClick={() => setShow(false)} className="CTA2">
