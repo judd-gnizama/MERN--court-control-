@@ -54,7 +54,8 @@ const AddEvent = ({ show, setShow, onAddEvent }) => {
     const _errors = validateForm();
     setErrors(_errors);
     if (_errors.length === 0) {
-      onAddEvent(addEventData);
+      const newAddEventData = addDateMeta();
+      onAddEvent(newAddEventData);
     }
   };
 
@@ -79,6 +80,24 @@ const AddEvent = ({ show, setShow, onAddEvent }) => {
     }
 
     return errors;
+  };
+
+  const addDateMeta = () => {
+    let allDates = [];
+    const dates = addEventData.date.forEach((_date) => {
+      allDates.push(_date.startDatetime);
+      allDates.push(_date.endDatetime);
+    });
+
+    const sortedDates = allDates.sort((a, b) => a - b);
+    const newAddEventData = {
+      ...addEventData,
+      earliestDate: sortedDates[0],
+      latestDate: sortedDates[sortedDates.length - 1],
+    };
+    console.log(newAddEventData);
+    setAddEventData(newAddEventData);
+    return newAddEventData;
   };
 
   useEffect(() => {

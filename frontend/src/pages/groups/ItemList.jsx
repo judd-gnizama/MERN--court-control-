@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getGroupById } from "../../controllers/groupsControllers";
 
 const ItemList = ({ theaders, tbody, dataKey }) => {
   const SORT_DIRECTIONS = ["unsorted", "ascending", "descending"];
@@ -29,11 +28,16 @@ const ItemList = ({ theaders, tbody, dataKey }) => {
       sortType: "alphabetical",
       visible: false,
     },
-
     {
       title: "Player Cap",
       headerKey: "playerCap",
       sortType: "number",
+      visible: false,
+    },
+    {
+      title: "Scheduled Date",
+      headerKey: "earliestDate",
+      sortType: "date",
       visible: true,
     },
   ];
@@ -41,7 +45,6 @@ const ItemList = ({ theaders, tbody, dataKey }) => {
   const [sortDirection, setSortDirection] = useState(0);
   const [filteredHeaders, setFilteredHeaders] = useState([]);
   const [sortedGroup, setSortedGroup] = useState(tbody);
-  const { groupId } = useParams();
 
   const cycleSortDirection = () => {
     const direction =
@@ -63,7 +66,7 @@ const ItemList = ({ theaders, tbody, dataKey }) => {
             : b[headerKey].localeCompare(a[headerKey])
         );
       }
-      if (sortBy === "number") {
+      if (sortBy === "number" || sortBy === "date") {
         return array.sort((a, b) =>
           direction === "ascending"
             ? a[headerKey] - b[headerKey]
@@ -100,7 +103,7 @@ const ItemList = ({ theaders, tbody, dataKey }) => {
   return (
     <div className="mt-4 flex flex-col gap-2">
       <div
-        className={`grid grid-cols-${filteredHeaders.length} gap-4 font-bold`}
+        className={`grid grid-cols-${filteredHeaders.length} gap-4 p-2 font-bold`}
       >
         {filteredHeaders &&
           filteredHeaders.map((header, index) => (

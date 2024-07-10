@@ -189,6 +189,12 @@ const EventSchema = new mongoose.Schema({
     type: [startEndDateTimesSchema],
     default: [],
   },
+  earliestDate: {
+    type: Date,
+  },
+  latestDate: {
+    type: Date,
+  },
   venue: {
     type: String,
     required: true,
