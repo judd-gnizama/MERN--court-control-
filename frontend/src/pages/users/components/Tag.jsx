@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FormAlert from "../../../components/FormAlert";
 
 const Tag = ({ labeltext, placeholder, inputValue, setInputValue }) => {
@@ -9,7 +9,8 @@ const Tag = ({ labeltext, placeholder, inputValue, setInputValue }) => {
   const handleSubmit = (event) => {
     if (event.key === "Enter" && event.target.value.trim() !== "") {
       const _tag = event.target.value.trim();
-      const index = tags?.indexOf(_tag);
+      // const index = tags?.indexOf(_tag);
+      const index = tags.findIndex(tag => tag ===_tag)
       if (index === -1) {
         setTags([...tags, _tag]);
         setInputValue([...tags, _tag]);
@@ -32,6 +33,10 @@ const Tag = ({ labeltext, placeholder, inputValue, setInputValue }) => {
     setTags([]);
     setInputValue([]);
   };
+
+  useEffect(()=>{
+    setTags(inputValue)
+  }, [inputValue])
 
   return (
     <div className="flex flex-col gap-2">

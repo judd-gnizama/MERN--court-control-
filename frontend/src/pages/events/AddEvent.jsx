@@ -98,6 +98,7 @@ const AddEvent = ({ show, setShow, onAddEvent }) => {
       subheading={"Create New"}
       show={show}
       setShow={setShow}
+      maxWidth={"max-w-fit"}
     >
       <Input
         placeholder={"Event Name"}

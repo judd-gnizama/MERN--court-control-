@@ -4,7 +4,6 @@ const startEndDateTimesSchema = new mongoose.Schema({
   dateId: {
     type: Number,
     required: true,
-    unique: true,
   },
   startDatetime: {
     type: Date,
@@ -185,7 +184,6 @@ const EventSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    unique: true,
   },
   date: {
     type: [startEndDateTimesSchema],
@@ -199,8 +197,8 @@ const EventSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  isDone: {
-    type: Boolean,
+  status: {
+    type: String,
     required: true,
   },
   playerTeams: {

@@ -60,10 +60,9 @@ const AddNewGroup = ({ show, setShow, onAdd }) => {
   };
 
   useEffect(() => {
-    if (!show) {
-      resetCurrentGroup();
-      setErrors([]);
-    }
+    resetCurrentGroup();
+    setErrors([]);
+    console.log("Changed state", currentGroup.tags)
   }, [show]);
 
   return (
