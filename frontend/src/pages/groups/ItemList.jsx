@@ -37,6 +37,7 @@ const ItemList = ({ theaders, tbody, dataKey }) => {
       visible: true,
     },
   ];
+  const [currentSortKey, setCurrentSortKey] = useState(0)
   const [sortDirection, setSortDirection] = useState(0);
   const [filteredHeaders, setFilteredHeaders] = useState([]);
   const [sortedGroup, setSortedGroup] = useState(tbody);
@@ -72,12 +73,13 @@ const ItemList = ({ theaders, tbody, dataKey }) => {
     }
   };
 
-  const handleSort = (array, keyToSort, sortBy) => {
-    const direction = cycleSortDirection();
-    const sortedEvents = sortArray(array, keyToSort, sortBy, direction);
+  const handleSort = (array, headerKey, sortBy) => {
+    const direction = headerKey === currentSortKey ? cycleSortDirection() : 1; // if sorting key is new, start with ascending
+    const sortedEvents = sortArray(array, headerKey, sortBy, direction);
     if (sortedEvents) {
       setSortedGroup({...tbody, [dataKey]: sortedEvents});
       setSortDirection(direction);
+      setCurrentSortKey(headerKey);
     }
   };
 
@@ -113,7 +115,7 @@ const ItemList = ({ theaders, tbody, dataKey }) => {
               className="flex gap-2 items-center"
             >
               {header.title}
-              {(sortDirection === 1 || sortDirection === 2) && (
+              {(sortDirection === 1 || sortDirection === 2) && (header.headerKey === currentSortKey) && (
                 <span className="material-symbols-outlined filled text-[0.8em]">
                   {sortDirection === 1 ? "arrow_upward" : "arrow_downward"}
                 </span>
