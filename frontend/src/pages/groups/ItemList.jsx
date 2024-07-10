@@ -27,9 +27,9 @@ const ItemList = ({ theaders, tbody, dataKey }) => {
       title: "Venue",
       headerKey: "venue",
       sortType: "alphabetical",
-      visible: true,
+      visible: false,
     },
-    
+
     {
       title: "Player Cap",
       headerKey: "playerCap",
@@ -37,11 +37,11 @@ const ItemList = ({ theaders, tbody, dataKey }) => {
       visible: true,
     },
   ];
-  const [currentSortKey, setCurrentSortKey] = useState(0)
+  const [currentSortKey, setCurrentSortKey] = useState(0);
   const [sortDirection, setSortDirection] = useState(0);
   const [filteredHeaders, setFilteredHeaders] = useState([]);
   const [sortedGroup, setSortedGroup] = useState(tbody);
-  const {groupId} = useParams();
+  const { groupId } = useParams();
 
   const cycleSortDirection = () => {
     const direction =
@@ -65,7 +65,9 @@ const ItemList = ({ theaders, tbody, dataKey }) => {
       }
       if (sortBy === "number") {
         return array.sort((a, b) =>
-          direction === "ascending" ? a[headerKey] - b[headerKey] : b[headerKey] - a[headerKey]
+          direction === "ascending"
+            ? a[headerKey] - b[headerKey]
+            : b[headerKey] - a[headerKey]
         );
       }
     } else {
@@ -77,7 +79,7 @@ const ItemList = ({ theaders, tbody, dataKey }) => {
     const direction = headerKey === currentSortKey ? cycleSortDirection() : 1; // if sorting key is new, start with ascending
     const sortedEvents = sortArray(array, headerKey, sortBy, direction);
     if (sortedEvents) {
-      setSortedGroup({...tbody, [dataKey]: sortedEvents});
+      setSortedGroup({ ...tbody, [dataKey]: sortedEvents });
       setSortDirection(direction);
       setCurrentSortKey(headerKey);
     }
@@ -86,21 +88,14 @@ const ItemList = ({ theaders, tbody, dataKey }) => {
   useEffect(() => {
     const visibleOnly = _theaders.filter((item) => item.visible === true);
     setFilteredHeaders(visibleOnly);
-    setSortedGroup(tbody)
+    setSortedGroup(tbody);
   }, []);
 
-  
   useEffect(() => {
-    const getGroup = async () => {
-      const _group = await getGroupById({ groupId });
-      setSortedGroup({ ..._group });
-    };
-    getGroup();
-  }, [groupId]);
-
-  useEffect(() => {
-    console.log(sortedGroup)
-  }, [sortedGroup])
+    setSortedGroup(tbody);
+    setCurrentSortKey(0);
+    setSortDirection(0);
+  }, [tbody]);
 
   return (
     <div className="mt-4 flex flex-col gap-2">
@@ -111,15 +106,18 @@ const ItemList = ({ theaders, tbody, dataKey }) => {
           filteredHeaders.map((header, index) => (
             <button
               key={`${header} ${index}`}
-              onClick={() => handleSort(tbody[dataKey], header.headerKey, header.sortType)}
+              onClick={() =>
+                handleSort(tbody[dataKey], header.headerKey, header.sortType)
+              }
               className="flex gap-2 items-center"
             >
               {header.title}
-              {(sortDirection === 1 || sortDirection === 2) && (header.headerKey === currentSortKey) && (
-                <span className="material-symbols-outlined filled text-[0.8em]">
-                  {sortDirection === 1 ? "arrow_upward" : "arrow_downward"}
-                </span>
-              )}
+              {(sortDirection === 1 || sortDirection === 2) &&
+                header.headerKey === currentSortKey && (
+                  <span className="material-symbols-outlined filled text-[0.8em]">
+                    {sortDirection === 1 ? "arrow_upward" : "arrow_downward"}
+                  </span>
+                )}
             </button>
           ))}
       </div>
@@ -135,7 +133,12 @@ const ItemList = ({ theaders, tbody, dataKey }) => {
                 >
                   {filteredHeaders &&
                     filteredHeaders.map(({ headerKey }) => (
-                      <span key={headerKey}>{item[headerKey]}</span>
+                      <span
+                        key={headerKey}
+                        className=" break-words text-ellipsis line-clamp-2"
+                      >
+                        {item[headerKey]}
+                      </span>
                     ))}
                   <span className="material-symbols-outlined absolute top-[50%] -translate-y-1/2 right-4">
                     chevron_right
