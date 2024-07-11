@@ -10,7 +10,44 @@ import ItemList from "./ItemList";
 
 const GROUP_TABS = ["Announcements", "Events", "Players", "About"];
 const SORT_DIRECTIONS = ["unsorted", "ascending", "descending"];
-
+const EVENT_HEADERS = [
+  {
+    title: "Name",
+    headerKey: "name",
+    sortType: "alphabetical",
+    visible: true,
+  },
+  {
+    title: "Description",
+    headerKey: "description",
+    sortType: "alphabetical",
+    visible: true,
+  },
+  {
+    title: "Type",
+    headerKey: "eventType",
+    sortType: "alphabetical",
+    visible: true,
+  },
+  {
+    title: "Venue",
+    headerKey: "venue",
+    sortType: "alphabetical",
+    visible: false,
+  },
+  {
+    title: "Player Cap",
+    headerKey: "playerCap",
+    sortType: "number",
+    visible: false,
+  },
+  {
+    title: "Scheduled Date",
+    headerKey: "earliestDate",
+    sortType: "date",
+    visible: true,
+  },
+];
 const GroupLayout = () => {
   const { groupId } = useParams();
   const [group, setGroup] = useState(null);
@@ -156,7 +193,11 @@ const GroupLayout = () => {
             //     Show more Results
             //   </button>
             // </div>
-            <ItemList tbody={group} dataKey={"events"} />
+            <ItemList
+              theaders={EVENT_HEADERS}
+              tbody={group}
+              dataKey={"events"}
+            />
           )}
         </UserSection>
       </UserLayout>

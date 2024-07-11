@@ -95,7 +95,6 @@ const AddEvent = ({ show, setShow, onAddEvent }) => {
       earliestDate: sortedDates[0],
       latestDate: sortedDates[sortedDates.length - 1],
     };
-    console.log(newAddEventData);
     setAddEventData(newAddEventData);
     return newAddEventData;
   };
