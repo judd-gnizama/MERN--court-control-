@@ -67,6 +67,7 @@
   .CTA3 {
     @apply text-[var(--color-neutral-white)] bg-red-500 px-4 py-2 rounded-[3px] font-bold;
   }
+  
   .CTA:hover,
   .CTA2:hover,
   .CTA3:hover {

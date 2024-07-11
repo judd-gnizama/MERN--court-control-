@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 const Search = ({ searchFor, searchTerm, setSearchTerm }) => {
   return (
-    <div className="flex-1 max-w-lg rounded-[3px] overflow-hidden relative">
+    <div className="flex-1 max-w-lg rounded-[3px] border border-transparent overflow-hidden relative">
       <input
         type="text"
         name="search"
