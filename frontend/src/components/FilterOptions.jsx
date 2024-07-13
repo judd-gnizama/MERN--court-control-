@@ -49,8 +49,21 @@ const FilterOptions = () => {
     setSelectedFilters(newFilters);
   };
 
-  const handleRemove = (fieldName) => {
-    console.log(fieldName);
+  const handleRemove = (valueToRemove) => {
+    const [varName, selectedToRemove] = valueToRemove.split("-");
+    console.log(varName, selectedToRemove);
+    const newSelectedFilters = selectedFilters.map((field) => {
+      if (field.varName === varName) {
+        return {
+          ...field,
+          selected: field.selected.filter((_sel) => _sel !== selectedToRemove),
+        };
+      } else {
+        return field;
+      }
+    });
+    console.log(newSelectedFilters);
+    setSelectedFilters(newSelectedFilters);
   };
 
   const handleRemoveAll = () => {
@@ -102,22 +115,42 @@ const FilterOptions = () => {
         </h2>
         <ul className="flex gap-2 break-words flex-wrap">
           {selectedFilters &&
-            selectedFilters.map((filter) => {
-              if (filter.selected.length > 0) {
-                const selectedFilterString = filter.selected.join(" or ");
-                return (
-                  <li className="inline-flex gap-1 bg-[var(--color-tertiary)] rounded-full px-4 py-2">
-                    {`${filter.fieldName}: ${selectedFilterString} `}
+            selectedFilters.map((filter) => (
+              // if (filter.selected.length > 0) {
+              //   const selectedFilterString = filter.selected.join(" or ");
+              //   return (
+              //     <li className="inline-flex gap-1 bg-[var(--color-tertiary)] rounded-full px-4 py-2">
+              //       {`${filter.fieldName}: ${selectedFilterString} `}
+              //       <button
+              //         onClick={() => handleRemove(filter.fieldName)}
+              //         className="material-symbols-outlined filled"
+              //       >
+              //         close
+              //       </button>
+              //     </li>
+              //   );
+              // }
+              <div className="flex items-center flex-wrap gap-1 bg-[var(--color-tertiary)] rounded-[3px] p-2">
+                {/* <ul> */}
+                {`${filter.fieldName}:  `}
+                {filter.selected.map((_filter) => (
+                  <li
+                    key={`${filter.varName}-${_filter}`}
+                    className="inline-flex gap-1 border rounded-full px-2"
+                  >
+                    {`${_filter} `}
                     <button
-                      onClick={() => handleRemove(filter.fieldName)}
-                      className="material-symbols-outlined filled"
+                      value={`${filter.varName}-${_filter}`}
+                      onClick={(e) => handleRemove(e.target.value)}
+                      className="material-symbols-outlined filled text-[0.8rem]"
                     >
                       close
                     </button>
                   </li>
-                );
-              }
-            })}
+                ))}
+                {/* </ul> */}
+              </div>
+            ))}
         </ul>
       </div>
     </div>

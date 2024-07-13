@@ -8,6 +8,7 @@ import Search from "./Search";
 import AddEvent from "../events/AddEvent";
 import ItemList from "./ItemList";
 import FilterOptions from "../../components/FilterOptions";
+import Filters from "../../components/Filters";
 
 const GROUP_TABS = ["Announcements", "Events", "Players", "About"];
 const SORT_DIRECTIONS = ["unsorted", "ascending", "descending"];
@@ -106,7 +107,8 @@ const GroupLayout = () => {
                 Event
               </button>
             </div>
-            <FilterOptions />
+            {/* <FilterOptions /> */}
+            <Filters />
             {/* <div className="bg-[var(--color-neutral-300)] p-4 rounded-[3px] border border-transparent">
               <h2 className="font-bold">Filter Options</h2>
               <select
