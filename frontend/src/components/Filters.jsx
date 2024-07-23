@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 const Filters = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const _FILTER_FIELDS = [
     {
       fieldName: "Type",
@@ -50,17 +53,19 @@ const Filters = () => {
 
   return (
     <div className="bg-[var(--color-neutral-300)] p-4 rounded-[3px] border border-transparent">
-      <h2 className="font-bold">Filter Options</h2>
+      <div className="flex gap-2">
+        <h2 className="font-bold">Filter Options</h2>
+        <button className="font-normal underline text-[0.8rem]">
+          Reset Filters
+        </button>
+      </div>
+
       <ul className="flex gap-2">
         {selectedFilters &&
           selectedFilters.map(
             ({ fieldName, varName, subfields, selected }, index) => (
-              <>
-                <label
-                  key={`field_${index}`}
-                  htmlFor={`filter_${varName}`}
-                  className="flex flex-col"
-                >
+              <div key={`field_${index}`}>
+                <label htmlFor={`filter_${varName}`} className="flex flex-col">
                   {fieldName}
                   <select
                     name={`filter_${varName}`}
@@ -79,7 +84,7 @@ const Filters = () => {
                       ))}
                   </select>
                 </label>
-              </>
+              </div>
             )
           )}
       </ul>

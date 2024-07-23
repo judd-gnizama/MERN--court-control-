@@ -203,7 +203,7 @@ const EventSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  status: {
+  eventStatus: {
     type: String,
     required: true,
   },

@@ -49,15 +49,19 @@ const EVENT_HEADERS = [
     sortType: "date",
     visible: true,
   },
+  {
+    title: "Status",
+    headerKey: "eventStatus",
+    sortType: "alphabetical",
+    visible: true,
+  },
 ];
 const GroupLayout = () => {
   const { groupId } = useParams();
   const [group, setGroup] = useState(null);
-  const [sortedGroup, setSortedGroup] = useState(null);
   const [tab, setTab] = useState("Events");
   const [searchTerm, setSearchTerm] = useState("");
   const [showAddEvent, setShowAddEvent] = useState(false);
-  const [sortDirection, setSortDirection] = useState(0);
 
   const handleAddEvent = async (newEvent) => {
     const newEvents = [...group.events, newEvent];
@@ -70,7 +74,6 @@ const GroupLayout = () => {
     const getGroup = async () => {
       const _group = await getGroupById({ groupId });
       setGroup(_group);
-      setSortedGroup({ ..._group });
     };
     getGroup();
   }, [groupId]);
@@ -107,36 +110,7 @@ const GroupLayout = () => {
                 Event
               </button>
             </div>
-            {/* <FilterOptions /> */}
             <Filters />
-            {/* <div className="bg-[var(--color-neutral-300)] p-4 rounded-[3px] border border-transparent">
-              <h2 className="font-bold">Filter Options</h2>
-              <select
-                name="filter_select_eventType"
-                id=""
-                className="bg-gray-700"
-                onChange={handleFilter}
-                value={filterSelect}
-              >
-                <option value="type" hidden defaultChecked>
-                  Type
-                </option>
-                <option value="fungame">Fun Game</option>
-                <option value="regular">Regular</option>
-                <option value="tournament">Tournament</option>
-              </select>
-              <div>
-                <h2>Selected Filters</h2>
-                <ul className="flex">
-                  <li className="inline-flex gap-1 bg-[var(--color-tertiary)] rounded-full px-4 py-2">
-                    Filter Option Selected
-                    <button className="material-symbols-outlined filled">
-                      close
-                    </button>
-                  </li>
-                </ul>
-              </div>
-            </div> */}
           </div>
         )}
         <UserSection title={tab.toUpperCase()}>

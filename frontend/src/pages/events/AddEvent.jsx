@@ -55,12 +55,14 @@ const AddEvent = ({ show, setShow, onAddEvent }) => {
     setErrors(_errors);
     if (_errors.length === 0) {
       const newAddEventData = addDateMeta();
+      console.log(newAddEventData);
       onAddEvent(newAddEventData);
     }
   };
 
   const validateForm = () => {
-    const { name, date, venue, eventType, playerCap } = addEventData;
+    const { name, date, venue, eventType, playerCap, eventStatus } =
+      addEventData;
     const errors = [];
     // check for errors
     if (!name.trim()) {
@@ -74,6 +76,9 @@ const AddEvent = ({ show, setShow, onAddEvent }) => {
     }
     if (!eventType) {
       errors.push("Event Type. Must not be empty.");
+    }
+    if (!eventStatus) {
+      errors.push("Event Status. Must not be empty.");
     }
     if (playerCap <= 0) {
       errors.push("Max Players. Must be greater than 0");
@@ -105,10 +110,6 @@ const AddEvent = ({ show, setShow, onAddEvent }) => {
       setErrors([]);
     }
   }, [show]);
-
-  // useEffect(() => {
-  //   console.log(addEventData);
-  // }, [addEventData]);
 
   return (
     <FormModal

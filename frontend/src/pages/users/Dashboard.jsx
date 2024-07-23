@@ -29,7 +29,7 @@ const Dashboard = () => {
           <div className="grid grid-cols-5 gap-2">
             <button
               onClick={() => setShowAddNewGroup(true)}
-              className="flex flex-col items-center justify-center  font-bold bg-[var(--color-primary)]"
+              className="flex flex-col items-center justify-center  font-bold bg-[var(--color-primary)] py-6"
             >
               <span className="material-symbols-outlined text-[3rem]">add</span>
               Create New Group
