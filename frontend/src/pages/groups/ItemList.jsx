@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
-const ItemList = ({ theaders, tbody, dataKey }) => {
+const ItemList = ({ theaders, tbody, dataKey, dependsOnQueries }) => {
   const SORT_DIRECTIONS = ["unsorted", "ascending", "descending"];
 
   const [currentSortKey, setCurrentSortKey] = useState(0);
   const [sortDirection, setSortDirection] = useState(0);
   const [filteredHeaders, setFilteredHeaders] = useState([]);
   const [sortedObject, setsortedObject] = useState(tbody);
+  const [queryParams, setQueryParams] = useState();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const cycleSortDirection = () => {
     const direction =
@@ -60,6 +62,7 @@ const ItemList = ({ theaders, tbody, dataKey }) => {
     const visibleOnly = theaders.filter((item) => item.visible === true);
     setFilteredHeaders(visibleOnly);
     setsortedObject(tbody);
+    setQueryParams(Object.fromEntries(searchParams.entries()));
   }, []);
 
   useEffect(() => {
@@ -105,6 +108,8 @@ const ItemList = ({ theaders, tbody, dataKey }) => {
               sortedObject[dataKey] &&
               sortedObject[dataKey].map((item, itemIdx) => {
                 if (item != null) {
+                  console.log(item);
+                  console.log(queryParams);
                   return (
                     <div
                       key={itemIdx}

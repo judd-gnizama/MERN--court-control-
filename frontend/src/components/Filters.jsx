@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 const Filters = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-
+  const queryParams = Object.fromEntries(searchParams.entries());
+  const [queries, setQueries] = useState(queryParams);
   const _FILTER_FIELDS = [
     {
       fieldName: "Type",
@@ -38,18 +39,36 @@ const Filters = () => {
       selected: "Any",
     },
   ];
-  const [selectedFilters, setSelectedFilters] = useState([..._FILTER_FIELDS]);
+  const [selectedFilters, setSelectedFilters] = useState(_FILTER_FIELDS);
 
-  const handleFilter = (value) => {
-    const [fieldName, selected] = value.split("-");
+  const handleFilter = (event) => {
+    const value = event.target.value;
+    const [varName, selected] = value.split("-");
+    if (selected !== "Any") {
+      setSearchParams({ ...queries, [varName]: value });
+      setQueries({ ...queries, [varName]: value });
+    } else {
+      const _temp = { ...queries };
+      delete _temp[varName];
+      setSearchParams(_temp);
+      setQueries(_temp);
+    }
     const newSelectedFilters = selectedFilters.map((filter) => {
-      if (filter.fieldName === fieldName) {
-        filter.selected = selected;
+      if (filter.varName === varName) {
+        filter.selected = value;
       }
       return filter;
     });
     setSelectedFilters(newSelectedFilters);
   };
+
+  useEffect(() => {
+    const newFilters = _FILTER_FIELDS.map((field) => ({
+      ...field,
+      selected: queries[field.varName],
+    }));
+    setSelectedFilters(newFilters);
+  }, [queries]);
 
   return (
     <div className="bg-[var(--color-neutral-300)] p-4 rounded-[3px] border border-transparent">
@@ -71,13 +90,14 @@ const Filters = () => {
                     name={`filter_${varName}`}
                     id={`filter_${varName}`}
                     className="bg-[var(--color-neutral-600)] focus:outline-none p-1 rounded-[3px]"
-                    onChange={(e) => handleFilter(e.target.value)}
+                    value={selected}
+                    onChange={handleFilter}
                   >
                     {subfields &&
                       subfields.map((subfield, index) => (
                         <option
                           key={`subfield_${index}`}
-                          value={`${fieldName}-${subfield}`}
+                          value={`${varName}-${subfield}`}
                         >
                           {subfield}
                         </option>

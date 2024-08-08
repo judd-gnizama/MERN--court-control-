@@ -112,7 +112,6 @@ const updateGroup = async (req, res) => {
   }
   if (events !== null) {
     newGroup.events = events;
-    console.log("events for update", events)
   }
   if (players !== null) {
     newGroup.players = players;
