@@ -11,6 +11,7 @@ const addNewEvent = async ({ groupId, newEvent }) => {
   const group = await getGroupById({ groupId });
   const newEvents = [...group.events, newEvent];
   const res = await fetch(`${BACKENDPATH}/api/groups/${groupId}`, {
+    mode: "no-cors",
     method: "PUT",
     headers: {
       "Content-Type": "application/json",

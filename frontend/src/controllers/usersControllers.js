@@ -44,6 +44,7 @@ const registerUser = async (registerData) => {
   }
 
   const res = await fetch(`${backendPath}/api/users/`, {
+    mode: "no-cors",
     method: "POST",
     headers: {
       "Content-Type": "application/json",

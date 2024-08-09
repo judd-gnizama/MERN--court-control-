@@ -5,6 +5,7 @@ const BACKENDPATH =
 
 const getUserGroups = async () => {
   const res = await fetch(`${BACKENDPATH}/api/groups/user`, {
+    mode: "no-cors",
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
@@ -29,6 +30,7 @@ const addNewGroup = async (groupData) => {
   }
 
   const res = await fetch(`${BACKENDPATH}/api/groups/`, {
+    mode: "no-cors",
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -66,6 +68,7 @@ const updateGroup = async ({ groupId, newGroup }) => {
   }
 
   const res = await fetch(`${BACKENDPATH}/api/groups/${groupId}`, {
+    mode: "no-cors",
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -84,6 +87,7 @@ const updateGroup = async ({ groupId, newGroup }) => {
 
 const deleteGroup = async ({ groupId }) => {
   const res = await fetch(`${BACKENDPATH}/api/groups/${groupId}`, {
+    mode: "no-cors",
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
