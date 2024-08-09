@@ -20,7 +20,7 @@ const corsOptions = {
 };
 
 // const corsMiddleware = cors(corsOptions);
-const corsMiddleware = cors(corsOptions);
+const corsMiddleware = cors();
 app.use(corsMiddleware);
 
 app.use(express.json());
