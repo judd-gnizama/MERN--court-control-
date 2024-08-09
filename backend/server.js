@@ -12,14 +12,14 @@ dotenv.config();
 // handle CORS policy
 
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: "*",
   methods: "GET, POST, PUT, DELETE",
   allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
   credentials: true,
 };
 
 // const corsMiddleware = cors(corsOptions);
-const corsMiddleware = cors("*");
+const corsMiddleware = cors(corsOptions);
 app.use(corsMiddleware);
 
 app.use(express.json());
