@@ -12,14 +12,15 @@ dotenv.config();
 // handle CORS policy
 
 const corsOptions = {
-  origin: "*",
+  origin:
+    "https://mern-court-control-g5x4-git-newerbranch-judd-gnizamas-projects.vercel.app",
   methods: "GET, POST, PUT, DELETE",
   allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
   credentials: true,
 };
 
 // const corsMiddleware = cors(corsOptions);
-const corsMiddleware = cors("*");
+const corsMiddleware = cors(corsOptions);
 app.use(corsMiddleware);
 
 app.use(express.json());
