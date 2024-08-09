@@ -9,8 +9,14 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-// handle CORS policy
+import path from "path";
+import { fileURLToPath } from "url";
 
+// Resolving dirname for ES module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// handle CORS policy
 const corsOptions = {
   origin:
     "https://mern-court-control-g5x4-git-newerbranch-judd-gnizamas-projects.vercel.app",
@@ -27,6 +33,11 @@ app.use(express.json());
 app.use("/api/echo", echoRoute);
 app.use("/api/groups", groupsRoutes);
 app.use("/api/users", usersRoutes);
+
+// Render client
+app.get("*", (req, res) =>
+  res.sendFile(path.join(__dirname, "../frontend/dist/index.html"))
+);
 
 mongoose
   // .connect("mongodb://localhost:27017/", { dbName: "cc_db" })
