@@ -1,5 +1,6 @@
 const backendPath = process.env.BACKENDPATH || "http://localhost:4000";
 
+console.log(process.env.backendPath);
 //--------------------------- Login User --------------------------
 
 const loginUser = async (loginData) => {
