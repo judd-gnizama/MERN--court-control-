@@ -1,4 +1,4 @@
-const BACKENDPATH = "http://localhost:4000";
+const BACKENDPATH = process.env.BACKENDPATH || "http://localhost:4000";
 
 //--------------------------- Get Groups of user --------------------------
 

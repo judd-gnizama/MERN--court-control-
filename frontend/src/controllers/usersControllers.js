@@ -1,4 +1,4 @@
-const backendPath = "http://localhost:4000";
+const backendPath = process.env.BACKENDPATH || "http://localhost:4000";
 
 //--------------------------- Login User --------------------------
 
