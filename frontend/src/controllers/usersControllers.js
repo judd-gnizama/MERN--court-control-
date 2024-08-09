@@ -11,6 +11,7 @@ const loginUser = async (loginData) => {
   }
 
   const res = await fetch(`${backendPath}/api/users/login`, {
+    mode: "no-cors",
     method: "POST",
     headers: {
       "Content-Type": "application/json",
