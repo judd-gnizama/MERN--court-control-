@@ -5,6 +5,9 @@ import { groupsRoutes } from "./routes/groupsRoutes.js";
 import { usersRoutes } from "./routes/usersRoutes.js";
 import cors from "cors";
 const app = express();
+import dotenv from "dotenv";
+
+dotenv.config();
 
 // handle CORS policy
 
