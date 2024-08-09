@@ -1,4 +1,5 @@
-const backendPath = process.env.BACKENDPATH || "http://localhost:4000";
+const backendPath =
+  process.env.BACKENDPATH || "https://mern-court-control.vercel.app";
 
 console.log(process.env.backendPath);
 //--------------------------- Login User --------------------------
