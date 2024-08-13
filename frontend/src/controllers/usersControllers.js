@@ -11,7 +11,6 @@ const loginUser = async (loginData) => {
   }
 
   const res = await fetch(`${backendPath}/api/users/login`, {
-    mode: "no-cors",
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -44,7 +43,6 @@ const registerUser = async (registerData) => {
   }
 
   const res = await fetch(`${backendPath}/api/users/`, {
-    mode: "no-cors",
     method: "POST",
     headers: {
       "Content-Type": "application/json",

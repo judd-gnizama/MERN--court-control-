@@ -18,7 +18,7 @@ const __dirname = path.dirname(__filename);
 
 // handle CORS policy
 const corsOptions = {
-  origin: "https://mern-court-control-g5x4.vercel.app/",
+  origin: "https://mern-court-control-g5x4.vercel.app",
   methods: "GET, POST, PUT, DELETE",
   allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
   credentials: true,
