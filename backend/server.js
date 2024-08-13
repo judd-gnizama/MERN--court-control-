@@ -20,7 +20,7 @@ const __dirname = path.dirname(__filename);
 const corsOptions = {
   origin: "https://mern-court-control-g5x4.vercel.app",
   methods: "GET, POST, PUT, DELETE",
-  // allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
   credentials: true,
 };
 
@@ -31,6 +31,11 @@ app.use(express.json());
 app.use("/api/echo", echoRoute);
 app.use("/api/groups", groupsRoutes);
 app.use("/api/users", usersRoutes);
+
+// Render client
+app.get("*", (req, res) =>
+  res.sendFile(path.join(__dirname, "../frontend/build/index.html"))
+);
 
 mongoose
   // .connect("mongodb://localhost:27017/", { dbName: "cc_db" })
