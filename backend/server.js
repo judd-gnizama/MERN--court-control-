@@ -20,7 +20,7 @@ const __dirname = path.dirname(__filename);
 const corsOptions = {
   origin: "https://mern-court-control-g5x4.vercel.app",
   methods: "GET, POST, PUT, DELETE",
-  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+  // allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
   credentials: true,
 };
 
