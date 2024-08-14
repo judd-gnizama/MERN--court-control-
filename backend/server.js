@@ -26,13 +26,13 @@ const corsOptions = {
 const corsMiddleware = cors(corsOptions);
 app.use(corsMiddleware);
 
-app.use("/api/echo", echoRoute);
-app.use("/api/groups", groupsRoutes);
-app.use("/api/users", usersRoutes);
-
 app.get("/", async (req, res) => {
   res.json({ message: "hello from server" });
 });
+
+app.use("/api/echo", echoRoute);
+app.use("/api/groups", groupsRoutes);
+app.use("/api/users", usersRoutes);
 
 // // Render client
 // app.get("*", (req, res) =>
