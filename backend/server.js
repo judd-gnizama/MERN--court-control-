@@ -32,6 +32,10 @@ app.use("/api/echo", echoRoute);
 app.use("/api/groups", groupsRoutes);
 app.use("/api/users", usersRoutes);
 
+app.get("/", async (req, res) => {
+  res.send("hello from server");
+});
+
 // // Render client
 // app.get("*", (req, res) =>
 //   res.sendFile(path.join(__dirname, "../frontend/build/index.html"))
