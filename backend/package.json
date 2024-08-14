@@ -2,10 +2,10 @@
   "name": "backend",
   "type": "module",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "server": "nodemon server.js",
-    "setup-production": "node server.js"
+    "server": "nodemon backend/server.js",
+    "start": "node backend/server.js"
   },
   "author": "",
   "license": "ISC",
