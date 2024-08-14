@@ -12,9 +12,9 @@ dotenv.config();
 import path from "path";
 import { fileURLToPath } from "url";
 
-// Resolving dirname for ES module
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// // Resolving dirname for ES module
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
 
 // handle CORS policy
 const corsOptions = {
@@ -32,10 +32,10 @@ app.use("/api/echo", echoRoute);
 app.use("/api/groups", groupsRoutes);
 app.use("/api/users", usersRoutes);
 
-// Render client
-app.get("*", (req, res) =>
-  res.sendFile(path.join(__dirname, "../frontend/build/index.html"))
-);
+// // Render client
+// app.get("*", (req, res) =>
+//   res.sendFile(path.join(__dirname, "../frontend/build/index.html"))
+// );
 
 mongoose
   // .connect("mongodb://localhost:27017/", { dbName: "cc_db" })
