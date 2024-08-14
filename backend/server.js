@@ -20,6 +20,7 @@ app.use(express.json());
 // handle CORS policy
 const corsOptions = {
   origin: "https://mern-court-control-g5x4.vercel.app",
+  methods: "GET,POST,PUT,PATCH,DELETE",
   credentials: true,
 };
 
