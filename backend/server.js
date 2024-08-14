@@ -4,11 +4,11 @@ import mongoose, { mongo } from "mongoose";
 import { groupsRoutes } from "./routes/groupsRoutes.js";
 import { usersRoutes } from "./routes/usersRoutes.js";
 import cors from "cors";
-const app = express();
 import dotenv from "dotenv";
 
 dotenv.config();
 
+const app = express();
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -16,24 +16,22 @@ import { fileURLToPath } from "url";
 // const __filename = fileURLToPath(import.meta.url);
 // const __dirname = path.dirname(__filename);
 
+app.use(express.json());
 // handle CORS policy
 const corsOptions = {
   origin: "https://mern-court-control-g5x4.vercel.app",
-  methods: "GET, POST, PUT, DELETE",
-  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
   credentials: true,
 };
 
 const corsMiddleware = cors(corsOptions);
 app.use(corsMiddleware);
 
-app.use(express.json());
 app.use("/api/echo", echoRoute);
 app.use("/api/groups", groupsRoutes);
 app.use("/api/users", usersRoutes);
 
 app.get("/", async (req, res) => {
-  res.send("hello from server");
+  res.json({ message: "hello from server" });
 });
 
 // // Render client
@@ -50,4 +48,7 @@ mongoose
       console.log("Listening to localhost:4000")
     );
   })
-  .catch((err) => console.log(err));
+  .catch((err) => {
+    console.log(err);
+    process.exit(1);
+  });
